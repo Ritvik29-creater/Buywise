@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "SoundMax Wireless Headphones",
+    "category": "headphones",
+    "price": 3999,
+    "rating": 4.5,
+    "features": ["wireless", "bluetooth", "30 hour battery", "noise isolation"]
+  },
+  {
+    "id": 2,
+    "name": "AudioPro ANC Headphones",
+    "category": "headphones",
+    "price": 6499,
+    "rating": 4.7,
+    "features": ["wireless", "bluetooth", "40 hour battery", "active noise cancellation"]
+  },
+  {
+    "id": 3,
+    "name": "BassLite Bluetooth Earbuds",
+    "category": "earbuds",
+    "price": 2499,
+    "rating": 4.2,
+    "features": ["wireless", "bluetooth", "24 hour battery", "compact"]
+  },
+  {
+    "id": 4,
+    "name": "WorkMate Mechanical Keyboard",
+    "category": "keyboard",
+    "price": 4499,
+    "rating": 4.6,
+    "features": ["mechanical", "rgb", "usb-c", "hot-swappable"]
+  },
+  {
+    "id": 5,
+    "name": "VisionView 27 Monitor",
+    "category": "monitor",
+    "price": 15999,
+    "rating": 4.4,
+    "features": ["27 inch", "144hz", "ips", "full hd"]
+  }
+]
