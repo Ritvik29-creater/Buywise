@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartShop Elite — Autonomous Agentic Retailer</title>
+  <meta name="description" content="Next-generation autonomous retail assistant powered by LangGraph multi-agent architecture and Google Gemini." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<div id="app">
+  <!-- ════════════ SIDEBAR ════════════ -->
+  <aside id="sidebar">
+    <a href="#" class="brand-wrapper">
+      <div class="brand-icon">🛒</div>
+      <div class="brand-info">
+        <span class="brand-title">SmartShop</span>
+        <span class="brand-tag">Elite Assistant</span>
+      </div>
+    </a>
+
+    <!-- CART PANEL -->
+    <div class="sidebar-section">
+      <div class="section-label">
+        <span>Shopping Cart</span>
+        <span class="badge-counter" id="cart-count-badge">0</span>
+      </div>
+      <div id="cart-container">
+        <div class="cart-empty">Your shopping cart is empty.<br>Ask the sales agent to find and add products!</div>
+      </div>
+      <div class="cart-summary" id="cart-summary-box" style="display:none">
+        <span class="cart-summary-text">Subtotal</span>
+        <span class="cart-summary-total" id="cart-total-amount">$0.00</span>
+      </div>
+      <button class="btn btn-checkout" id="cart-checkout-button" style="display:none" onclick="triggerPrompt('I am ready to checkout and purchase the items in my shopping cart.')">
+        🛍️ Checkout Order
+      </button>
+    </div>
+
+    <!-- SESSION STATS -->
+    <div class="sidebar-section">
+      <div class="section-label">Agent State</div>
+      <div class="status-pill">
+        <span>Active Agent</span>
+        <strong><span class="status-indicator"></span><span id="sidebar-mode-text">Sales Agent</span></strong>
+      </div>
+      <div class="status-pill">
+        <span>Session Thread</span>
+        <strong id="sidebar-thread-id" style="font-family:var(--font-mono);font-size:0.7rem">—</strong>
+      </div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="sidebar-section">
+      <div class="section-label">Actions</div>
+      <div class="btn-group">
+        <button class="btn btn-secondary" onclick="startFreshSession()">↺ Reset</button>
+        <button class="btn btn-secondary" onclick="triggerPrompt('What is currently inside my cart?')">🛒 Cart</button>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="sidebar-footer">
+      Multi-Agent LangGraph Architecture<br>
+      Google Gemini + ChromaDB Semantic Search<br>
+      <span style="color:#6366f1;font-weight:600">SmartShop Elite Web Edition</span>
+    </div>
+  </aside>
+
+  <!-- ════════════ MAIN VIEWPORT ════════════ -->
+  <main id="main">
+    <!-- Header -->
+    <header id="header">
+      <div class="header-left">
+        <div class="header-title-box">
+          <h1>SmartShop Elite Retail Concierge</h1>
+          <p>Autonomous Sales &amp; Customer Support Multi-Agent System</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="mode-badge sales" id="agent-mode-badge">Sales Representative</span>
+      </div>
+    </header>
+
+    <!-- Chat Area -->
+    <div id="chat-viewport">
+      <div id="welcome-card">
+        <span class="welcome-badge">AI-Powered Autonomous Retailer</span>
+        <h2 class="welcome-title">Welcome to SmartShop Elite</h2>
+        <p class="welcome-desc">Your autonomous retail concierge. I can explore our catalog via vector embeddings, compare technical specs, review customer sentiment, maintain your real-time shopping cart, and seamlessly coordinate with support.</p>
+        
+        <div class="prompts-container">
+          <div class="prompt-chip" onclick="triggerPrompt('Compare Sony WH-1000XM5 and Bose QuietComfort Ultra headphones.')">
+            <span class="chip-icon">🎧</span>
+            <div>Compare Sony &amp; Bose Flagships</div>
+          </div>
+          <div class="prompt-chip" onclick="triggerPrompt('Find Apple MacBook and high-performance ultrabooks.')">
+            <span class="chip-icon">💻</span>
+            <div>MacBook &amp; Ultrabooks</div>
+          </div>
+          <div class="prompt-chip" onclick="triggerPrompt('Recommend top-rated home espresso machines.')">
+            <span class="chip-icon">☕</span>
+            <div>Espresso Coffee Machines</div>
+          </div>
+          <div class="prompt-chip" onclick="triggerPrompt('Find high-cushion running shoes with great reviews.')">
+            <span class="chip-icon">👟</span>
+            <div>Pro Running Shoes</div>
+          </div>
+          <div class="prompt-chip" onclick="triggerPrompt('Can you check what is in my cart?')">
+            <span class="chip-icon">🛒</span>
+            <div>View Shopping Cart</div>
+          </div>
+          <div class="prompt-chip" onclick="triggerPrompt('I want to track my recent orders.')">
+            <span class="chip-icon">📦</span>
+            <div>Track Recent Orders</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Human-in-the-Loop Supervisor Banner -->
+    <div id="approval-banner">
+      <div class="approval-top">
+        <div class="approval-title">⚠️ Human Supervisor Authorization Required</div>
+        <div class="severity-pill severity-high" id="approval-severity-badge">HIGH</div>
+      </div>
+      <div class="approval-desc" id="approval-summary-text">A financial policy exception or refund escalation has been requested.</div>
+      <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:8px;" id="approval-details-text"></div>
+    </div>
+
+    <!-- Chat Input Dock -->
+    <div id="input-dock">
+      <div style="font-size:0.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px" id="input-field-label">Your Message</div>
+      <div class="input-box">
+        <input type="text" id="chat-input" placeholder="Ask for recommendations, compare products, or manage orders..." autocomplete="off" />
+        <input type="text" id="supervisor-text-input" style="display:none" placeholder="Provide supervisor instructions/approval..." autocomplete="off" />
+        <button class="send-action-btn" id="send-button" title="Send">➤</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

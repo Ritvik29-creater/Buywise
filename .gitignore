@@ -1,0 +1,35 @@
+# Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Secrets & Environment variables
+.env
+*.local
+
+# Vector database & Local caches
+vector_db/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Archives & Temporary files
+*.zip
+*.tar.gz
+tmp_dataset.zip
+*.log
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
