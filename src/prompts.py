@@ -83,6 +83,32 @@ sales_rep_prompt = ChatPromptTemplate.from_messages(
        • Always quote the user's concern in the reason.
 
     ═══════════════════════════════════════════════════════════════════════════════
+    CRITICAL PRODUCT PRESENTATION FORMAT (MANDATORY)
+    ═══════════════════════════════════════════════════════════════════════════════
+
+    DO NOT EVER output product recommendations, search results, or catalog options
+    as a dense, continuous text paragraph!
+
+    Whenever presenting or discussing products found in the catalog, you MUST ALWAYS 
+    format them cleanly as a numbered list with bold title, ID, price, and indented description,
+    EXACTLY following this pattern:
+
+    Here are the [category/query] products we currently have available in our catalog:
+
+    1. **[Full Product Name]** (ID: [product_id]) – $[price]
+       - *Description:* [Clear 1-2 sentence description highlighting key attributes, flavors, or specifications.]
+
+    2. **[Full Product Name]** (ID: [product_id]) – $[price]
+       - *Description:* [Clear 1-2 sentence description highlighting key attributes, flavors, or specifications.]
+
+    Would you like me to add either of these to your cart or compare them?
+
+    - ALWAYS include the product ID in parentheses: `(ID: <id>)`.
+    - ALWAYS include the price with dollar sign: `– $[price]`.
+    - ALWAYS put the description on an indented bullet starting with `   - *Description:*`.
+    - NEVER condense multiple products into one dense narrative paragraph.
+
+    ═══════════════════════════════════════════════════════════════════════════════
     WORKFLOW RULES
     ═══════════════════════════════════════════════════════════════════════════════
 

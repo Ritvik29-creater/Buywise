@@ -562,12 +562,203 @@ details[data-testid="stExpander"] * {
 }
 .session-pill strong { color: #f8fafc; font-weight: 600; }
 
+/* ── Product Detail Page & Action Badges ── */
+.prod-page-container {
+    background: rgba(13, 18, 40, 0.82) !important;
+    border: 1.5px solid rgba(168, 85, 247, 0.4) !important;
+    border-radius: 24px !important;
+    padding: 28px !important;
+    backdrop-filter: blur(32px) !important;
+    -webkit-backdrop-filter: blur(32px) !important;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.65), 0 0 32px rgba(99,102,241,0.2) !important;
+    margin-bottom: 24px !important;
+}
+
+.prod-page-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(99,102,241,0.18);
+    border: 1px solid rgba(99,102,241,0.4);
+    border-radius: 9999px;
+    padding: 4px 14px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #a5b4fc;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.prod-page-title {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 1.75rem !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    line-height: 1.35 !important;
+    margin: 12px 0 !important;
+}
+
+.prod-page-price {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #38bdf8;
+    text-shadow: 0 0 20px rgba(56,189,248,0.4);
+    margin-right: 18px;
+}
+
+.prod-spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.prod-spec-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 12px 14px;
+}
+.prod-spec-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #94a3b8;
+    margin-bottom: 4px;
+}
+.prod-spec-val {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #f1f5f9;
+}
+
+.order-celebrate-box {
+    background: linear-gradient(135deg, rgba(16,185,129,0.2) 0%, rgba(99,102,241,0.2) 100%);
+    border: 1.5px solid rgba(52,211,153,0.55);
+    border-radius: 18px;
+    padding: 20px 24px;
+    box-shadow: 0 10px 30px rgba(16,185,129,0.25);
+    margin-bottom: 22px;
+}
+
+.prod-tap-header {
+    margin-top: 14px;
+    margin-bottom: 8px;
+    font-size: 0.82rem;
+    color: #c084fc;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+}
+
 hr { border-color: rgba(255,255,255,0.08) !important; margin: 16px 0 !important; }
 </style>
 """, unsafe_allow_html=True)
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
+# ── Helpers & Catalog Access ─────────────────────────────────────────────────
+@st.cache_data
+def get_catalog_data():
+    try:
+        prods = pd.read_csv("./dataset/products.csv", engine="python")
+        depts = pd.read_csv("./dataset/departments.csv", engine="python")
+        aisles = pd.read_csv("./dataset/aisles.csv", engine="python")
+        merged = prods.merge(depts, on="department_id", how="left").merge(aisles, on="aisle_id", how="left")
+        return merged
+    except Exception:
+        return pd.DataFrame()
+
+
+def get_product_details(product_id: int):
+    df = get_catalog_data()
+    if df.empty:
+        return None
+    try:
+        matches = df[df["product_id"] == int(product_id)]
+        if not matches.empty:
+            return matches.iloc[0].to_dict()
+    except Exception:
+        pass
+    return None
+
+
+def extract_product_ids_from_text(text: str) -> list:
+    if not text:
+        return []
+    import re
+    pattern = r"(?:\(ID:\s*|ID:\s*|ID\s+)(\d+)\)?"
+    matches = re.findall(pattern, text, re.IGNORECASE)
+    seen = set()
+    result = []
+    df = get_catalog_data()
+    valid_ids = set(df["product_id"].tolist()) if not df.empty else set()
+    for m in matches:
+        try:
+            pid = int(m)
+            if pid not in seen and (not valid_ids or pid in valid_ids):
+                seen.add(pid)
+                result.append(pid)
+        except Exception:
+            pass
+    return result
+
+
+def instant_buy_product(product_id: int):
+    try:
+        import random
+        from src.tools import set_thread_id, _order_storage, _product_lookup, get_product_price
+        tid = st.session_state.thread_id
+        set_thread_id(tid)
+        order_num = random.randint(10000, 99999)
+        order_id = f"ORD-{order_num}"
+        p_info = get_product_details(product_id)
+        name = p_info["product_name"] if p_info else _product_lookup.get(product_id, f"Product #{product_id}")
+        price = float(p_info.get("price", get_product_price(product_id))) if p_info else get_product_price(product_id)
+        
+        now = datetime.now()
+        order_record = {
+            "order_id": order_id,
+            "status": "delivered",
+            "placed_at": now.strftime("%Y-%m-%d %H:%M"),
+            "estimated_delivery": now.strftime("%Y-%m-%d") + " (Delivered · Auto-Satisfied)",
+            "items": [{"product_id": product_id, "name": name, "quantity": 1, "price": price}],
+            "total": round(price, 2),
+            "cancellable": True,
+            "refund_eligible": True,
+        }
+        
+        thread_orders = _order_storage.setdefault(tid, [])
+        thread_orders.append(order_record)
+        
+        st.session_state.last_instant_order = {
+            "order_id": order_id,
+            "product_id": product_id,
+            "product_name": name,
+            "price": price,
+            "time": now.strftime("%H:%M:%S"),
+        }
+        st.toast(f"🎉 Order {order_id} placed and auto-satisfied! (${price:.2f})", icon="✅")
+    except Exception as e:
+        st.error(f"Error completing instant purchase: {e}")
+
+
+def add_product_to_cart_direct(product_id: int):
+    try:
+        from src.tools import set_thread_id, get_cart, _product_lookup, get_product_price
+        tid = st.session_state.thread_id
+        set_thread_id(tid)
+        cart = get_cart()
+        if isinstance(cart, dict):
+            cart[product_id] = cart.get(product_id, 0) + 1
+        direct_cart_update()
+        p_info = get_product_details(product_id)
+        pname = p_info.get("product_name", f"Product #{product_id}") if p_info else f"Product #{product_id}"
+        st.toast(f"🛒 Added '{pname[:30]}' to your cart!", icon="🛍️")
+    except Exception as e:
+        st.error(f"Error adding to cart: {e}")
+
+
 def get_product_price(product_id):
     try:
         from src.tools import get_product_price as _tool_price
@@ -650,6 +841,8 @@ def init_session():
         "debug_mode": False,
         "current_mode": "sales_rep",
         "cart_items": {},
+        "active_product_id": None,
+        "last_instant_order": None,
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -762,6 +955,8 @@ def reset_conversation():
     st.session_state.pending_user_query = None
     st.session_state.current_mode = "sales_rep"
     st.session_state.cart_items = {}
+    st.session_state.active_product_id = None
+    st.session_state.last_instant_order = None
 
 
 def clear_cart_items():
@@ -774,6 +969,127 @@ def clear_cart_items():
         st.session_state.cart_items = {}
     except Exception:
         st.session_state.cart_items = {}
+
+
+def render_product_page(product_id: int):
+    p_info = get_product_details(product_id)
+    if not p_info:
+        st.error("Product not found in store catalog.")
+        if st.button("⬅️ Back to Chat Concierge", key="err_back_chat"):
+            st.session_state.active_product_id = None
+            st.rerun()
+        return
+
+    p_name = p_info.get("product_name", f"Product #{product_id}")
+    p_price = float(p_info.get("price", 0.0))
+    p_brand = p_info.get("brand", "SmartShop Elite")
+    p_rating = float(p_info.get("rating", 4.8))
+    p_reviews = int(p_info.get("review_count", 120))
+    p_desc = p_info.get("description", "Premium catalog item.")
+    p_dept = p_info.get("department", "General")
+    p_aisle = p_info.get("aisle", "General")
+
+    # Navigation header
+    col_nav1, col_nav2 = st.columns([1, 1])
+    with col_nav1:
+        if st.button("⬅️ Back to Chat Concierge", key="btn_back_chat_top", use_container_width=True):
+            st.session_state.active_product_id = None
+            st.rerun()
+    with col_nav2:
+        if st.session_state.get("last_instant_order") and st.session_state.last_instant_order.get("product_id") == product_id:
+            oid = st.session_state.last_instant_order["order_id"]
+            if st.button(f"📦 Ask Concierge to Track Order {oid}", key="btn_track_this_order", use_container_width=True):
+                st.session_state.active_product_id = None
+                send_user_message(f"Can you track my order {oid}?")
+                st.rerun()
+
+    # Celebratory Banner if recently ordered
+    if st.session_state.get("last_instant_order") and st.session_state.last_instant_order.get("product_id") == product_id:
+        lo = st.session_state.last_instant_order
+        st.markdown(f"""
+        <div class="order-celebrate-box">
+            <div style="font-size:1.15rem;font-weight:700;color:#34d399;margin-bottom:6px;">
+                🎉 Order Placed & Auto-Satisfied for Testing!
+            </div>
+            <div style="font-size:0.92rem;color:#f1f5f9;line-height:1.6;">
+                • <strong>Order ID:</strong> <code style="color:#38bdf8;">{lo['order_id']}</code><br>
+                • <strong>Product:</strong> {lo['product_name']}<br>
+                • <strong>Total Paid:</strong> ${lo['price']:.2f}<br>
+                • <strong>Status:</strong> <span style="color:#34d399;font-weight:700;">Delivered Immediately (Auto-Satisfied Self-Test Mode)</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Main Product Detail Hero
+    st.markdown(f"""
+    <div class="prod-page-container">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;">
+            <span class="prod-page-badge">🏪 {p_dept}</span>
+            <span class="prod-page-badge" style="background:rgba(168,85,247,0.18);border-color:rgba(168,85,247,0.4);color:#d8b4fe;">🏷️ {p_brand}</span>
+            <span class="prod-page-badge" style="background:rgba(16,185,129,0.18);border-color:rgba(16,185,129,0.4);color:#34d399;">🟢 In Stock · Immediate Fulfillment</span>
+        </div>
+        <div class="prod-page-title">{p_name}</div>
+        <div style="display:flex;align-items:baseline;margin-bottom:18px;">
+            <span class="prod-page-price">${p_price:.2f}</span>
+            <span style="font-size:0.95rem;color:#cbd5e1;">⭐ <strong>{p_rating:.1f}/5.0</strong> ({p_reviews:,} verified buyer reviews)</span>
+        </div>
+        <div style="font-size:1.02rem;color:#e2e8f0;line-height:1.7;margin-bottom:20px;">
+            {p_desc}
+        </div>
+        <div class="prod-spec-grid">
+            <div class="prod-spec-card">
+                <div class="prod-spec-label">Product ID</div>
+                <div class="prod-spec-val">#{product_id}</div>
+            </div>
+            <div class="prod-spec-card">
+                <div class="prod-spec-label">Department</div>
+                <div class="prod-spec-val">{p_dept}</div>
+            </div>
+            <div class="prod-spec-card">
+                <div class="prod-spec-label">Aisle Category</div>
+                <div class="prod-spec-val">{p_aisle}</div>
+            </div>
+            <div class="prod-spec-card">
+                <div class="prod-spec-label">Customer Satisfaction</div>
+                <div class="prod-spec-val">98% Positive Rating</div>
+            </div>
+            <div class="prod-spec-card">
+                <div class="prod-spec-label">Guarantee</div>
+                <div class="prod-spec-val">30-Day Money Back</div>
+            </div>
+            <div class="prod-spec-card">
+                <div class="prod-spec-label">Shipping</div>
+                <div class="prod-spec-val">Free Next-Day Delivery</div>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Action Buttons
+    st.markdown('<div style="font-size:0.8rem;font-weight:700;letter-spacing:1px;color:#818cf8;text-transform:uppercase;margin-bottom:10px;">⚡ Product Actions & Testing</div>', unsafe_allow_html=True)
+    btn_c1, btn_c2, btn_c3 = st.columns([2, 2, 2])
+    with btn_c1:
+        if st.button("⚡ Buy Now (Auto-Satisfied)", key="btn_page_buy_now", use_container_width=True):
+            instant_buy_product(product_id)
+            st.rerun()
+    with btn_c2:
+        if st.button("🛒 Add to Cart", key="btn_page_add_cart", use_container_width=True):
+            add_product_to_cart_direct(product_id)
+            st.rerun()
+    with btn_c3:
+        if st.button("💬 Ask Concierge About Item", key="btn_page_ask_agent", use_container_width=True):
+            st.session_state.active_product_id = None
+            send_user_message(f"Tell me more about {p_name} and customer review highlights.")
+            st.rerun()
+
+    # Also provide collapsible chat preview so context isn't lost
+    with st.expander("💬 View Conversation History with Concierge", expanded=False):
+        for h_msg in st.session_state.chat_history:
+            h_role = h_msg.get("role", "assistant")
+            h_text = h_msg.get("content", "")
+            if h_role in ["user", "assistant"]:
+                with st.chat_message(h_role):
+                    st.markdown(h_text)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -858,6 +1174,24 @@ with st.sidebar:
         st.caption("Raw Cart Items:")
         st.json(st.session_state.cart_items)
 
+    # ── Direct Product Page Explorer ──
+    df_cat = get_catalog_data()
+    if not df_cat.empty:
+        with st.expander("🛍️ Direct Product Explorer (116)", expanded=False):
+            prod_options = {
+                int(row["product_id"]): f"#{int(row['product_id'])} · {str(row['product_name'])[:28]}... (${float(row.get('price', 0.0)):.2f})"
+                for _, row in df_cat.iterrows()
+            }
+            sel_pid = st.selectbox(
+                "Pick a product to view:",
+                options=list(prod_options.keys()),
+                format_func=lambda x: prod_options[x],
+                key="sb_select_prod_picker",
+            )
+            if st.button("📄 Open Product Page", key="sb_btn_open_prod", use_container_width=True):
+                st.session_state.active_product_id = sel_pid
+                st.rerun()
+
     with st.expander("📁 Department Catalog (10)", expanded=False):
         st.markdown("""
         * **📱 Electronics**: 16 items
@@ -881,7 +1215,7 @@ with st.sidebar:
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-#  MAIN — HEADER
+#  MAIN — HEADER & VIEW ROUTING
 # ═══════════════════════════════════════════════════════════════════════════════
 is_sales = st.session_state.current_mode == "sales_rep"
 mode_class = "sales" if is_sales else "support"
@@ -897,215 +1231,248 @@ st.markdown(f"""
     <span class="ss-mode-badge {mode_class}">{mode_label}</span>
 </div>""", unsafe_allow_html=True)
 
-# ── Permanent Catalog & Questions Guide ──
-with st.expander("💡 What Products Can I Ask About? (Browse 116 Items Across 10 Departments)", expanded=not bool(st.session_state.chat_history)):
-    st.markdown("""
-    You can ask me to **recommend**, **search**, **compare**, or **check reviews & specs** for products across our catalog:
-    
-    * **📱 Electronics**: *Apple iPhone 16 Pro Max, Samsung Galaxy S24 Ultra, Google Pixel 9 Pro, OnePlus 12, iPad Pro M4, Apple Watch Ultra 2, Kindle Paperwhite*
-    * **💻 Computers & Gaming**: *MacBook Pro 16" M3 Max, MacBook Air 15" M3, Dell XPS 14 OLED, Razer Blade 16, Logitech MX Master 3S, Keychron Q1 Pro*
-    * **🎧 Audio & Sound**: *Sony WH-1000XM5, Bose QuietComfort Ultra, Apple AirPods Max, Sonos Move 2, JBL Charge 5, Sennheiser Momentum 4*
-    * **👟 Footwear**: *Nike Air Zoom Pegasus 41, Hoka Clifton 9, Brooks Ghost 16, On Cloudmonster 2, Asics Gel-Kayano 31, Adidas Ultraboost Light*
-    * **🧥 Fashion & Apparel**: *The North Face 1996 Retro Nuptse, Arc'teryx Beta LT GORE-TEX, Patagonia Nano Puff, Lululemon Scuba Hoodie*
-    * **☕ Home & Kitchen**: *Breville Barista Touch Impress, Nespresso VertuoPlus, Fellow Ode Gen 2 Burr Grinder, Ninja Air Fryer Max XL, Le Creuset Dutch Oven*
-    * **🏃 Sports & Outdoors**: *WHOOP 4.0 Health Tracker, Oura Ring Gen3 Horizon, Manduka PRO Yoga Mat, Bowflex SelectTech Dumbbells*
-    * **✨ Beauty & Skincare**: *The Ordinary Niacinamide + Zinc, CeraVe Hydrating Cleanser, Paula's Choice 2% BHA Salicylic Acid, Dyson Supersonic Hair Dryer*
-    * **🍫 Gourmet & Snacks**: *RXBAR Protein Variety Pack, Barebells Creamy Crisp 20g, Blue Bottle Bella Donovan Beans, Compartes Luxury Truffles*
-    * **📚 Books & Stationery**: *Project Hail Mary, Dune Deluxe Edition, Tomorrow and Tomorrow and Tomorrow, Leuchtturm1917 Hardcover Notebook*
-    """)
+# ── CONDITIONAL VIEW: PRODUCT PAGE OR CONCIERGE CHAT ──
+if st.session_state.get("active_product_id"):
+    render_product_page(st.session_state.active_product_id)
+else:
+    # ── Permanent Catalog & Questions Guide ──
+    with st.expander("💡 What Products Can I Ask About? (Browse 116 Items Across 10 Departments)", expanded=not bool(st.session_state.chat_history)):
+        st.markdown("""
+        You can ask me to **recommend**, **search**, **compare**, or **check reviews & specs** for products across our catalog:
+        
+        * **📱 Electronics**: *Apple iPhone 16 Pro Max, Samsung Galaxy S24 Ultra, Google Pixel 9 Pro, OnePlus 12, iPad Pro M4, Apple Watch Ultra 2, Kindle Paperwhite*
+        * **💻 Computers & Gaming**: *MacBook Pro 16" M3 Max, MacBook Air 15" M3, Dell XPS 14 OLED, Razer Blade 16, Logitech MX Master 3S, Keychron Q1 Pro*
+        * **🎧 Audio & Sound**: *Sony WH-1000XM5, Bose QuietComfort Ultra, Apple AirPods Max, Sonos Move 2, JBL Charge 5, Sennheiser Momentum 4*
+        * **👟 Footwear**: *Nike Air Zoom Pegasus 41, Hoka Clifton 9, Brooks Ghost 16, On Cloudmonster 2, Asics Gel-Kayano 31, Adidas Ultraboost Light*
+        * **🧥 Fashion & Apparel**: *The North Face 1996 Retro Nuptse, Arc'teryx Beta LT GORE-TEX, Patagonia Nano Puff, Lululemon Scuba Hoodie*
+        * **☕ Home & Kitchen**: *Breville Barista Touch Impress, Nespresso VertuoPlus, Fellow Ode Gen 2 Burr Grinder, Ninja Air Fryer Max XL, Le Creuset Dutch Oven*
+        * **🏃 Sports & Outdoors**: *WHOOP 4.0 Health Tracker, Oura Ring Gen3 Horizon, Manduka PRO Yoga Mat, Bowflex SelectTech Dumbbells*
+        * **✨ Beauty & Skincare**: *The Ordinary Niacinamide + Zinc, CeraVe Hydrating Cleanser, Paula's Choice 2% BHA Salicylic Acid, Dyson Supersonic Hair Dryer*
+        * **🍫 Gourmet & Snacks**: *RXBAR Protein Variety Pack, Barebells Creamy Crisp 20g, Blue Bottle Bella Donovan Beans, Compartes Luxury Truffles*
+        * **📚 Books & Stationery**: *Project Hail Mary, Dune Deluxe Edition, Tomorrow and Tomorrow and Tomorrow, Leuchtturm1917 Hardcover Notebook*
+        """)
 
-
-# ═══════════════════════════════════════════════════════════════════════════════
-#  WELCOME HERO & QUICK-START CARDS (When chat is empty)
-# ═══════════════════════════════════════════════════════════════════════════════
-if not st.session_state.chat_history:
-    st.markdown("""
-    <div class="welcome-hero">
-        <div class="welcome-icon">✨</div>
-        <div class="welcome-title">Welcome to SmartShop Elite</div>
-        <div class="welcome-subtitle">
-            Your personal retail concierge powered by LangGraph multi-agent architecture and Google Gemini.
-            Discover products with vector search, compare specs, analyze review sentiment, and manage your cart seamlessly.
+    # ── WELCOME HERO & QUICK-START CARDS (When chat is empty) ──
+    if not st.session_state.chat_history:
+        st.markdown("""
+        <div class="welcome-hero">
+            <div class="welcome-icon">✨</div>
+            <div class="welcome-title">Welcome to SmartShop Elite</div>
+            <div class="welcome-subtitle">
+                Your personal retail concierge powered by LangGraph multi-agent architecture and Google Gemini.
+                Discover products with vector search, compare specs, analyze review sentiment, and manage your cart seamlessly.
+            </div>
         </div>
-    </div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
 
-    st.markdown('<div style="text-align:center;font-size:0.75rem;font-weight:700;letter-spacing:1.4px;color:#818cf8;text-transform:uppercase;margin-bottom:14px;">Quick Start Suggestions</div>', unsafe_allow_html=True)
+        st.markdown('<div style="text-align:center;font-size:0.75rem;font-weight:700;letter-spacing:1.4px;color:#818cf8;text-transform:uppercase;margin-bottom:14px;">Quick Start Suggestions</div>', unsafe_allow_html=True)
 
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("🎧 Compare Sony WH-1000XM5 & Bose Ultra", key="hero_sug_audio", use_container_width=True):
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("🎧 Compare Sony WH-1000XM5 & Bose Ultra", key="hero_sug_audio", use_container_width=True):
+                send_user_message("Compare Sony WH-1000XM5 and Bose QuietComfort Ultra headphones.")
+                st.rerun()
+            if st.button("👟 Find top-rated running shoes with good cushioning", key="hero_sug_shoes", use_container_width=True):
+                send_user_message("Find top-rated running shoes with good cushioning under $200.")
+                st.rerun()
+            if st.button("☕ Recommend the best home espresso machines", key="hero_sug_coffee", use_container_width=True):
+                send_user_message("Recommend the best home espresso machines.")
+                st.rerun()
+        with col2:
+            if st.button("💻 Find Apple MacBook & premium ultrabooks", key="hero_sug_laptop", use_container_width=True):
+                send_user_message("Find Apple MacBook and high-performance ultrabooks.")
+                st.rerun()
+            if st.button("📦 Track my recent order status", key="hero_sug_orders", use_container_width=True):
+                send_user_message("Can you track my recent orders?")
+                st.rerun()
+            if st.button("🛒 What's currently in my cart?", key="hero_sug_cart", use_container_width=True):
+                direct_cart_update()
+                send_user_message("What is currently in my shopping cart?")
+                st.rerun()
+
+    # ── CHAT MESSAGES DISPLAY (Rich Native Markdown + Glass Cards) ──
+    for msg_idx, msg in enumerate(st.session_state.chat_history):
+        role = msg["role"]
+        content = msg["content"]
+
+        if role == "user":
+            with st.chat_message("user", avatar="👤"):
+                st.markdown(content)
+
+        elif role == "assistant":
+            mode = msg.get("mode", "sales_rep")
+            is_agent_sales = mode == "sales_rep"
+            avatar_icon = "🛍️" if is_agent_sales else "🎧"
+            agent_title = "Sales Specialist" if is_agent_sales else "Support Agent"
+            pill_class = "sales" if is_agent_sales else "support"
+            
+            with st.chat_message("assistant", avatar=avatar_icon):
+                st.markdown(f'<span class="agent-badge-pill {pill_class}">{agent_title}</span>', unsafe_allow_html=True)
+                st.markdown(content)
+
+                # Interactive Product Badges / Tap to view product page
+                detected_pids = extract_product_ids_from_text(content)
+                if detected_pids:
+                    st.markdown('<div class="prod-tap-header">🔍 <strong>Tap a Product</strong> to View Product Page, Specs & Instant Buy:</div>', unsafe_allow_html=True)
+                    for idx_p, pid in enumerate(detected_pids):
+                        p_info = get_product_details(pid)
+                        if p_info:
+                            p_name = p_info.get("product_name", f"Product #{pid}")
+                            p_price = float(p_info.get("price", 0.0))
+                            p_brand = p_info.get("brand", "")
+                            b_prefix = f"[{p_brand}] " if p_brand else ""
+                            col_card_a, col_card_b = st.columns([3, 2])
+                            with col_card_a:
+                                if st.button(f"📄 View Product: {b_prefix}{p_name[:34]}... (${p_price:.2f})", key=f"chat_tap_prod_{msg_idx}_{pid}_{idx_p}", use_container_width=True):
+                                    st.session_state.active_product_id = pid
+                                    st.rerun()
+                            with col_card_b:
+                                if st.button(f"⚡ Instant Buy (${p_price:.2f})", key=f"chat_fast_buy_{msg_idx}_{pid}_{idx_p}", use_container_width=True):
+                                    instant_buy_product(pid)
+                                    st.rerun()
+
+        elif role == "supervisor":
+            with st.chat_message("assistant", avatar="🛡️"):
+                st.markdown('<span class="agent-badge-pill supervisor">Supervisor Decision</span>', unsafe_allow_html=True)
+                st.markdown(content)
+
+        elif role == "tool_call":
+            if st.session_state.debug_mode:
+                with st.expander(f"🛠️ Calling {msg.get('tool_name', 'tool')}", expanded=False):
+                    st.code(content, language="python")
+
+        elif role == "tool_result":
+            if st.session_state.debug_mode:
+                with st.expander(f"📋 Result from {msg.get('tool_name', 'tool')}", expanded=False):
+                    st.code(content, language="markdown")
+
+        elif role == "error":
+            st.error(f"**Error**: {content}", icon="⚠️")
+
+    # ── REACTIVE TURN: RENDER USER QUERY IMMEDIATELY + LIVE ASSISTANT STATUS ──
+    if st.session_state.get("pending_user_query"):
+        incoming_query = st.session_state.pop("pending_user_query")
+        
+        # 1. Add user message to history and render IMMEDIATELY
+        st.session_state.chat_history.append({"role": "user", "content": incoming_query})
+        with st.chat_message("user", avatar="👤"):
+            st.markdown(incoming_query)
+
+        # 2. Render assistant with live glassmorphic animated thinking status
+        is_agent_sales = st.session_state.current_mode == "sales_rep"
+        avatar_icon = "🛍️" if is_agent_sales else "🎧"
+        agent_title = "Sales Specialist" if is_agent_sales else "Support Agent"
+        pill_class = "sales" if is_agent_sales else "support"
+
+        with st.chat_message("assistant", avatar=avatar_icon):
+            st.markdown(f'<span class="agent-badge-pill {pill_class}">{agent_title}</span>', unsafe_allow_html=True)
+            with st.status("🔮 **SmartShop Concierge is finding the best products...**", expanded=True) as status_box:
+                st.write("🔍 Searching vector database & catalog inventory...")
+                try:
+                    reply_text = execute_user_turn(incoming_query)
+                    st.write("⚡ Analyzing specs, pricing & customer sentiment...")
+                    status_box.update(label="✨ **Recommendations Ready!**", state="complete", expanded=False)
+                    if reply_text:
+                        st.markdown(reply_text)
+                        live_pids = extract_product_ids_from_text(reply_text)
+                        if live_pids:
+                            st.markdown('<div class="prod-tap-header">🔍 <strong>Tap a Product</strong> to View Product Page, Specs & Instant Buy:</div>', unsafe_allow_html=True)
+                            for idx_p, pid in enumerate(live_pids):
+                                p_info = get_product_details(pid)
+                                if p_info:
+                                    p_name = p_info.get("product_name", f"Product #{pid}")
+                                    p_price = float(p_info.get("price", 0.0))
+                                    p_brand = p_info.get("brand", "")
+                                    b_prefix = f"[{p_brand}] " if p_brand else ""
+                                    col_card_a, col_card_b = st.columns([3, 2])
+                                    with col_card_a:
+                                        if st.button(f"📄 View Product: {b_prefix}{p_name[:34]}... (${p_price:.2f})", key=f"chat_tap_prod_live_{pid}_{idx_p}", use_container_width=True):
+                                            st.session_state.active_product_id = pid
+                                            st.rerun()
+                                    with col_card_b:
+                                        if st.button(f"⚡ Instant Buy (${p_price:.2f})", key=f"chat_fast_buy_live_{pid}_{idx_p}", use_container_width=True):
+                                            instant_buy_product(pid)
+                                            st.rerun()
+                except Exception as err:
+                    status_box.update(label="⚠️ **Request failed**", state="error", expanded=True)
+                    st.error(f"Error: {err}")
+                    st.session_state.chat_history.append({"role": "error", "content": str(err)})
+
+        st.rerun()
+
+    # ── HUMAN APPROVAL INTERRUPT PANEL ──
+    if st.session_state.pending_approval:
+        approval = st.session_state.pending_approval
+        sev = approval.get("severity", "unknown").lower()
+        sev_class = "sev-high" if sev == "high" else ("sev-medium" if sev == "medium" else "sev-low")
+        
+        st.markdown(f"""
+        <div class="approval-panel">
+            <h4>🛡️ Human Supervisor Authorization Required</h4>
+            <div class="approval-row"><span class="label">Summary</span><span class="value">{approval.get('summary', 'Action requires approval')}</span></div>
+            <div class="approval-row"><span class="label">Severity</span><span class="value"><span class="sev-pill {sev_class}">{sev.upper()}</span></span></div>
+            <div class="approval-row"><span class="label">Details</span><span class="value">{approval.get('message', '')}</span></div>
+        </div>""", unsafe_allow_html=True)
+        
+        col_a, col_b = st.columns([1, 1])
+        with col_a:
+            if st.button("✅ Approve Request", key="btn_appr_fast", use_container_width=True):
+                send_supervisor_decision("Approved. Please proceed with processing the request.")
+                st.rerun()
+        with col_b:
+            if st.button("❌ Deny Request", key="btn_deny_fast", use_container_width=True):
+                send_supervisor_decision("Denied. Unable to approve request per store policy.")
+                st.rerun()
+
+    # ── PERSISTENT QUICK SUGGESTIONS & PINNED CHAT INPUT ──
+    st.markdown('<div style="margin-top:16px;margin-bottom:8px;font-size:0.75rem;font-weight:700;letter-spacing:1px;color:#818cf8;text-transform:uppercase;">⚡ Quick Suggestions & Sample Queries</div>', unsafe_allow_html=True)
+    s_cols1 = st.columns(4)
+    with s_cols1[0]:
+        if st.button("👟 Running Shoes", key="sug_shoes", use_container_width=True):
+            send_user_message("Show me top-rated running shoes with good cushioning under $200.")
+            st.rerun()
+    with s_cols1[1]:
+        if st.button("📱 iPhone vs S24", key="sug_phones", use_container_width=True):
+            send_user_message("Compare Apple iPhone 16 Pro Max and Samsung Galaxy S24 Ultra.")
+            st.rerun()
+    with s_cols1[2]:
+        if st.button("🎧 Sony XM5 vs Bose", key="sug_audio", use_container_width=True):
             send_user_message("Compare Sony WH-1000XM5 and Bose QuietComfort Ultra headphones.")
             st.rerun()
-        if st.button("👟 Find top-rated running shoes with good cushioning", key="hero_sug_shoes", use_container_width=True):
-            send_user_message("Find top-rated running shoes with good cushioning under $200.")
+    with s_cols1[3]:
+        if st.button("💻 MacBook Pro M3", key="sug_laptop", use_container_width=True):
+            send_user_message("Find Apple MacBook Pro and high-performance gaming laptops.")
             st.rerun()
-        if st.button("☕ Recommend the best home espresso machines", key="hero_sug_coffee", use_container_width=True):
+
+    s_cols2 = st.columns(4)
+    with s_cols2[0]:
+        if st.button("☕ Espresso Machines", key="sug_coffee", use_container_width=True):
             send_user_message("Recommend the best home espresso machines.")
             st.rerun()
-    with col2:
-        if st.button("💻 Find Apple MacBook & premium ultrabooks", key="hero_sug_laptop", use_container_width=True):
-            send_user_message("Find Apple MacBook and high-performance ultrabooks.")
+    with s_cols2[1]:
+        if st.button("🧥 Winter Jackets", key="sug_jacket", use_container_width=True):
+            send_user_message("Recommend warm winter jackets like North Face or Patagonia.")
             st.rerun()
-        if st.button("📦 Track my recent order status", key="hero_sug_orders", use_container_width=True):
+    with s_cols2[2]:
+        if st.button("📦 Order Status", key="sug_orders", use_container_width=True):
             send_user_message("Can you track my recent orders?")
             st.rerun()
-        if st.button("🛒 What's currently in my cart?", key="hero_sug_cart", use_container_width=True):
+    with s_cols2[3]:
+        if st.button("🛒 View Cart", key="sug_cart", use_container_width=True):
             direct_cart_update()
             send_user_message("What is currently in my shopping cart?")
             st.rerun()
 
+    input_placeholder = (
+        "Provide supervisor instructions or approval decision..."
+        if st.session_state.pending_approval
+        else "Ask me to find products, compare items, track orders, or checkout..."
+    )
 
-# ═══════════════════════════════════════════════════════════════════════════════
-#  CHAT MESSAGES DISPLAY (Rich Native Markdown + Glass Cards)
-# ═══════════════════════════════════════════════════════════════════════════════
-for msg in st.session_state.chat_history:
-    role = msg["role"]
-    content = msg["content"]
-
-    if role == "user":
-        with st.chat_message("user", avatar="👤"):
-            st.markdown(content)
-
-    elif role == "assistant":
-        mode = msg.get("mode", "sales_rep")
-        is_agent_sales = mode == "sales_rep"
-        avatar_icon = "🛍️" if is_agent_sales else "🎧"
-        agent_title = "Sales Specialist" if is_agent_sales else "Support Agent"
-        pill_class = "sales" if is_agent_sales else "support"
-        
-        with st.chat_message("assistant", avatar=avatar_icon):
-            st.markdown(f'<span class="agent-badge-pill {pill_class}">{agent_title}</span>', unsafe_allow_html=True)
-            st.markdown(content)
-
-    elif role == "supervisor":
-        with st.chat_message("assistant", avatar="🛡️"):
-            st.markdown('<span class="agent-badge-pill supervisor">Supervisor Decision</span>', unsafe_allow_html=True)
-            st.markdown(content)
-
-    elif role == "tool_call":
-        if st.session_state.debug_mode:
-            with st.expander(f"🛠️ Calling {msg.get('tool_name', 'tool')}", expanded=False):
-                st.code(content, language="python")
-
-    elif role == "tool_result":
-        if st.session_state.debug_mode:
-            with st.expander(f"📋 Result from {msg.get('tool_name', 'tool')}", expanded=False):
-                st.code(content, language="markdown")
-
-    elif role == "error":
-        st.error(f"**Error**: {content}", icon="⚠️")
-
-# ── REACTIVE TURN: RENDER USER QUERY IMMEDIATELY + LIVE ASSISTANT STATUS ──
-if st.session_state.get("pending_user_query"):
-    incoming_query = st.session_state.pop("pending_user_query")
-    
-    # 1. Add user message to history and render IMMEDIATELY
-    st.session_state.chat_history.append({"role": "user", "content": incoming_query})
-    with st.chat_message("user", avatar="👤"):
-        st.markdown(incoming_query)
-
-    # 2. Render assistant with live glassmorphic animated thinking status
-    is_agent_sales = st.session_state.current_mode == "sales_rep"
-    avatar_icon = "🛍️" if is_agent_sales else "🎧"
-    agent_title = "Sales Specialist" if is_agent_sales else "Support Agent"
-    pill_class = "sales" if is_agent_sales else "support"
-
-    with st.chat_message("assistant", avatar=avatar_icon):
-        st.markdown(f'<span class="agent-badge-pill {pill_class}">{agent_title}</span>', unsafe_allow_html=True)
-        with st.status("🔮 **SmartShop Concierge is finding the best products...**", expanded=True) as status_box:
-            st.write("🔍 Searching vector database & catalog inventory...")
-            try:
-                reply_text = execute_user_turn(incoming_query)
-                st.write("⚡ Analyzing specs, pricing & customer sentiment...")
-                status_box.update(label="✨ **Recommendations Ready!**", state="complete", expanded=False)
-                if reply_text:
-                    st.markdown(reply_text)
-            except Exception as err:
-                status_box.update(label="⚠️ **Request failed**", state="error", expanded=True)
-                st.error(f"Error: {err}")
-                st.session_state.chat_history.append({"role": "error", "content": str(err)})
-
-    st.rerun()
-
-
-# ═══════════════════════════════════════════════════════════════════════════════
-#  HUMAN APPROVAL INTERRUPT PANEL
-# ═══════════════════════════════════════════════════════════════════════════════
-if st.session_state.pending_approval:
-    approval = st.session_state.pending_approval
-    sev = approval.get("severity", "unknown").lower()
-    sev_class = "sev-high" if sev == "high" else ("sev-medium" if sev == "medium" else "sev-low")
-    
-    st.markdown(f"""
-    <div class="approval-panel">
-        <h4>🛡️ Human Supervisor Authorization Required</h4>
-        <div class="approval-row"><span class="label">Summary</span><span class="value">{approval.get('summary', 'Action requires approval')}</span></div>
-        <div class="approval-row"><span class="label">Severity</span><span class="value"><span class="sev-pill {sev_class}">{sev.upper()}</span></span></div>
-        <div class="approval-row"><span class="label">Details</span><span class="value">{approval.get('message', '')}</span></div>
-    </div>""", unsafe_allow_html=True)
-    
-    col_a, col_b = st.columns([1, 1])
-    with col_a:
-        if st.button("✅ Approve Request", key="btn_appr_fast", use_container_width=True):
-            send_supervisor_decision("Approved. Please proceed with processing the request.")
-            st.rerun()
-    with col_b:
-        if st.button("❌ Deny Request", key="btn_deny_fast", use_container_width=True):
-            send_supervisor_decision("Denied. Unable to approve request per store policy.")
-            st.rerun()
-
-
-# ═══════════════════════════════════════════════════════════════════════════════
-#  PERSISTENT QUICK SUGGESTIONS & PINNED CHAT INPUT
-# ═══════════════════════════════════════════════════════════════════════════════
-st.markdown('<div style="margin-top:16px;margin-bottom:8px;font-size:0.75rem;font-weight:700;letter-spacing:1px;color:#818cf8;text-transform:uppercase;">⚡ Quick Suggestions & Sample Queries</div>', unsafe_allow_html=True)
-s_cols1 = st.columns(4)
-with s_cols1[0]:
-    if st.button("👟 Running Shoes", key="sug_shoes", use_container_width=True):
-        send_user_message("Show me top-rated running shoes with good cushioning under $200.")
-        st.rerun()
-with s_cols1[1]:
-    if st.button("📱 iPhone vs S24", key="sug_phones", use_container_width=True):
-        send_user_message("Compare Apple iPhone 16 Pro Max and Samsung Galaxy S24 Ultra.")
-        st.rerun()
-with s_cols1[2]:
-    if st.button("🎧 Sony XM5 vs Bose", key="sug_audio", use_container_width=True):
-        send_user_message("Compare Sony WH-1000XM5 and Bose QuietComfort Ultra headphones.")
-        st.rerun()
-with s_cols1[3]:
-    if st.button("💻 MacBook Pro M3", key="sug_laptop", use_container_width=True):
-        send_user_message("Find Apple MacBook Pro and high-performance gaming laptops.")
+    if user_query := st.chat_input(input_placeholder):
+        if st.session_state.pending_approval:
+            send_supervisor_decision(user_query)
+        else:
+            st.session_state.pending_user_query = user_query
         st.rerun()
 
-s_cols2 = st.columns(4)
-with s_cols2[0]:
-    if st.button("☕ Espresso Machines", key="sug_coffee", use_container_width=True):
-        send_user_message("Recommend the best home espresso machines.")
-        st.rerun()
-with s_cols2[1]:
-    if st.button("🧥 Winter Jackets", key="sug_jacket", use_container_width=True):
-        send_user_message("Recommend warm winter jackets like North Face or Patagonia.")
-        st.rerun()
-with s_cols2[2]:
-    if st.button("📦 Order Status", key="sug_orders", use_container_width=True):
-        send_user_message("Can you track my recent orders?")
-        st.rerun()
-with s_cols2[3]:
-    if st.button("🛒 View Cart", key="sug_cart", use_container_width=True):
-        direct_cart_update()
-        send_user_message("What is currently in my shopping cart?")
-        st.rerun()
-
-input_placeholder = (
-    "Provide supervisor instructions or approval decision..."
-    if st.session_state.pending_approval
-    else "Ask me to find products, compare items, track orders, or checkout..."
-)
-
-if user_query := st.chat_input(input_placeholder):
-    if st.session_state.pending_approval:
-        send_supervisor_decision(user_query)
-    else:
-        st.session_state.pending_user_query = user_query
-    st.rerun()
