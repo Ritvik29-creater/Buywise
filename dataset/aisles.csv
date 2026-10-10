@@ -1,35 +1,46 @@
 aisle_id,aisle
-101,Smartphones & Mobile
+101,Smartphones & Mobile Devices
 102,Tablets & E-Readers
 103,Smartwatches & Wearables
-104,Smart Home & Automation
-201,Laptops & Ultrabooks
-202,Monitors & Displays
-203,Gaming Consoles & Peripherals
-204,Keyboards & Mice
-301,Noise Cancelling Headphones
-302,Wireless Earbuds
-303,Bluetooth Speakers
-401,Espresso & Coffee Machines
-402,Air Fryers & Blenders
-403,Cookware & Chef Knives
-404,Robot Vacuums & Cleaning
-501,Men's Jackets & Outerwear
-502,Hoodies & Sweatshirts
-503,Denim & Casual Pants
-504,Activewear & Athleisure
-601,Running Shoes & Trainers
-602,Lifestyle Sneakers
-603,Boots & Casual Footwear
-701,Fitness Trackers & Gym Gear
-702,"Yoga, Weights & Recovery"
-703,Camping & Outdoor Recreation
-801,Skincare & Face Care
-802,Haircare & Styling Tools
-803,Luxury Fragrances
-901,Protein Bars & Healthy Snacks
-902,Specialty Coffee Beans & Tea
-903,Sparkling Beverages & Hydration
-1001,Bestselling Fiction & Sci-Fi
-1002,"Tech, Business & Self-Help"
-1003,Notebooks & Premium Pens
+104,Smart Home & Security Cameras
+105,"Charging, Power Banks & Cables"
+201,Laptops & High-Performance Ultrabooks
+202,Monitors & High-Refresh Displays
+203,Gaming Consoles & Handhelds
+204,Mechanical Keyboards & Gaming Mice
+205,Fast External Storage & Docks
+301,Active Noise Cancelling Over-Ear Headphones
+302,True Wireless Noise-Cancelling Earbuds
+303,Waterproof Bluetooth Speakers
+304,Home Theater Soundbars & Audio Systems
+401,Espresso Machines & Coffee Grinders
+402,"Air Fryers, Blenders & Kitchen Tech"
+403,"Cast Iron, Knives & Premium Cookware"
+404,Robot Vacuums & Cordless Cleaning
+405,Air Purifiers & Smart Climate Control
+501,Weatherproof Jackets & Down Parkas
+502,"Premium Hoodies, Sweaters & Flannels"
+503,Denim Jeans & Everyday Chinos
+504,Performance Activewear & Gym Apparel
+505,"Travel Bags, Wallets & Backpacks"
+601,Road & Trail Running Shoes
+602,Lifestyle Sneakers & Classics
+603,Waterproof Hiking Boots & Outdoor Shoes
+604,Recovery Slides & Comfort Footwear
+701,Smart Fitness Trackers & Gym Tech
+702,"Adjustable Dumbbells, Mats & Recovery"
+703,"Camping Tents, Sleeping Bags & Gear"
+704,"Hydration Bottles, Flasks & Coolers"
+801,"Sun Care & Sunscreens (Wet Skin, Sport, Mineral & Chemical)"
+802,"Facial Cleansers, Exfoliators & Toners"
+803,"Targeted Serums (Vitamin C, Niacinamide, Retinol)"
+804,"Barrier Moisturizers, Creams & Lip Care"
+805,"Luxury Haircare, Shampoos & Styling Tools"
+806,"Fragrances, Body Washes & Personal Care"
+901,"Whey Protein, Plant Protein & Bars"
+902,Specialty Whole Bean Coffee & Ceremonial Matcha
+903,"Electrolytes, Energy Drinks & Hydration"
+904,"Artisan Chocolates, Honey & Healthy Pantry"
+1001,"Bestselling Sci-Fi, Fantasy & Fiction"
+1002,"Technology, Productivity & Leadership Books"
+1003,"Fountain Pens, Dot-Grid Journals & Desk Tech"

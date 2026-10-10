@@ -32,32 +32,31 @@ st.markdown("""
 
 html, body, [class*="css"], .stApp {
     font-family: 'Plus Jakarta Sans', -apple-system, sans-serif !important;
-    background: #060814 !important;
-    color: #f8fafc !important;
+    background: #f8fafc !important;
+    color: #0f172a !important;
 }
 
-/* Ambient Radial Glows (Deep Obsidian + Vivid Violet + Cyan Accents) */
+/* ── CLASSIC LUXURY LIGHT CANVAS ── */
 .stApp {
     background:
-        radial-gradient(circle at 10% 12%, rgba(99,102,241,0.22) 0%, transparent 42%),
-        radial-gradient(circle at 90% 70%, rgba(168,85,247,0.20) 0%, transparent 45%),
-        radial-gradient(circle at 50% 45%, rgba(6,182,212,0.08) 0%, transparent 55%),
-        radial-gradient(circle at 75% 15%, rgba(236,72,153,0.08) 0%, transparent 35%),
-        linear-gradient(135deg, #060814 0%, #0b0f24 50%, #080d1e 100%) !important;
+        radial-gradient(circle at 8% 10%, rgba(99, 102, 241, 0.07) 0%, transparent 45%),
+        radial-gradient(circle at 92% 14%, rgba(217, 119, 6, 0.05) 0%, transparent 42%),
+        radial-gradient(circle at 50% 60%, rgba(241, 245, 249, 0.6) 0%, transparent 55%),
+        linear-gradient(180deg, #ffffff 0%, #f8fafc 40%, #f1f5f9 100%) !important;
     background-attachment: fixed !important;
 }
 
-/* Glassmorphism Sidebar */
+/* ── LUMINOUS SIDEBAR ── */
 section[data-testid="stSidebar"] {
-    background: rgba(11, 15, 36, 0.78) !important;
-    backdrop-filter: blur(32px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: 8px 0 36px rgba(0,0,0,0.55), inset -1px 0 0 rgba(255,255,255,0.06) !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(28px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+    border-right: 1px solid rgba(226, 232, 240, 0.9) !important;
+    box-shadow: 4px 0 28px rgba(15, 23, 42, 0.04) !important;
 }
 
 section[data-testid="stSidebar"] * {
-    color: #e2e8f0 !important;
+    color: #1e293b !important;
 }
 
 section[data-testid="stSidebar"] > div {
@@ -78,7 +77,7 @@ section[data-testid="stSidebar"] > div {
 }
 .stDeployButton { display: none !important; }
 
-/* ── CRITICAL: ELIMINATE STREAMLIT WHITE RECTANGLE AT BOTTOM ── */
+/* ── ELIMINATE STREAMLIT BOTTOM CONTAINER BACKGROUND ── */
 div[data-testid="stBottom"],
 div[data-testid="stBottom"] > div,
 div[data-testid="stBottom"] footer,
@@ -91,32 +90,32 @@ div[data-testid="stChatFloatingInputContainer"],
     border: none !important;
 }
 
-/* ── ULTRA-PREMIUM CHAT INPUT WITH GLASSMORPHISM ── */
+/* ── LUXURY LIGHT CHAT INPUT ── */
 div[data-testid="stChatInput"] {
-    background: rgba(15, 23, 42, 0.85) !important;
-    background-color: rgba(15, 23, 42, 0.85) !important;
-    border: 1.5px solid rgba(99, 102, 241, 0.5) !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
     border-radius: 20px !important;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.7), 0 0 24px rgba(99,102,241,0.25), inset 0 1px 0 rgba(255,255,255,0.15) !important;
-    backdrop-filter: blur(28px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+    box-shadow: 0 10px 32px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
     transition: all 0.25s ease !important;
 }
 
 div[data-testid="stChatInput"]:focus-within {
-    border-color: #a855f7 !important;
-    box-shadow: 0 12px 48px rgba(0,0,0,0.85), 0 0 32px rgba(168,85,247,0.45), inset 0 1px 0 rgba(255,255,255,0.25) !important;
+    border-color: #4f46e5 !important;
+    box-shadow: 0 12px 38px rgba(79, 70, 229, 0.16), 0 0 0 3px rgba(79, 70, 229, 0.12) !important;
 }
 
 div[data-testid="stChatInput"] textarea {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
     background: transparent !important;
     background-color: transparent !important;
     font-size: 1rem !important;
     font-weight: 500 !important;
     line-height: 1.5 !important;
-    caret-color: #a855f7 !important;
+    caret-color: #4f46e5 !important;
 }
 
 div[data-testid="stChatInput"] textarea::placeholder {
@@ -126,35 +125,32 @@ div[data-testid="stChatInput"] textarea::placeholder {
 }
 
 div[data-testid="stChatInput"] button {
-    color: #a855f7 !important;
+    color: #4f46e5 !important;
     background: transparent !important;
     transition: transform 0.2s, color 0.2s;
 }
 div[data-testid="stChatInput"] button:hover {
-    color: #c084fc !important;
+    color: #3730a3 !important;
     transform: scale(1.1);
 }
 
-/* ── READABLE GLASS CHAT MESSAGES ── */
+/* ── CRISP LIGHT CHAT MESSAGES ── */
 div[data-testid="stChatMessage"] {
-    background: rgba(14, 20, 44, 0.72) !important;
-    border: 1px solid rgba(255,255,255,0.12) !important;
-    border-top: 1px solid rgba(255,255,255,0.2) !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
     border-radius: 18px !important;
-    padding: 1.15rem 1.4rem !important;
-    margin-bottom: 1rem !important;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.08) !important;
-    backdrop-filter: blur(24px) saturate(160%) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+    padding: 1.25rem 1.45rem !important;
+    margin-bottom: 1.1rem !important;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02) !important;
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 div[data-testid="stChatMessage"]:hover {
-    border-color: rgba(99,102,241,0.45) !important;
-    box-shadow: 0 10px 36px rgba(0,0,0,0.45), 0 0 20px rgba(99,102,241,0.15) !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 8px 26px rgba(15, 23, 42, 0.07) !important;
 }
 
-/* Force all text in messages to be crisp, bright, and legible */
+/* High contrast text legibility */
 div[data-testid="stChatMessage"] *,
 div[data-testid="stChatMessage"] p,
 div[data-testid="stChatMessage"] span,
@@ -162,16 +158,16 @@ div[data-testid="stChatMessage"] div,
 div[data-testid="stChatMessage"] li,
 div[data-testid="stChatMessage"] td,
 div[data-testid="stChatMessage"] th {
-    color: #f1f5f9 !important;
-    -webkit-text-fill-color: #f1f5f9 !important;
-    font-size: 0.97rem !important;
-    line-height: 1.65 !important;
+    color: #1e293b !important;
+    -webkit-text-fill-color: #1e293b !important;
+    font-size: 0.98rem !important;
+    line-height: 1.68 !important;
 }
 
 div[data-testid="stChatMessage"] strong,
 div[data-testid="stChatMessage"] b {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
     font-weight: 700 !important;
 }
 
@@ -179,8 +175,8 @@ div[data-testid="stChatMessage"] h1,
 div[data-testid="stChatMessage"] h2,
 div[data-testid="stChatMessage"] h3,
 div[data-testid="stChatMessage"] h4 {
-    color: #a5b4fc !important;
-    -webkit-text-fill-color: #a5b4fc !important;
+    color: #1e1b4b !important;
+    -webkit-text-fill-color: #1e1b4b !important;
     font-family: 'Space Grotesk', sans-serif !important;
     font-weight: 700 !important;
     margin-top: 0.8rem !important;
@@ -188,27 +184,28 @@ div[data-testid="stChatMessage"] h4 {
 }
 
 div[data-testid="stChatMessage"] a {
-    color: #38bdf8 !important;
-    -webkit-text-fill-color: #38bdf8 !important;
+    color: #2563eb !important;
+    -webkit-text-fill-color: #2563eb !important;
     text-decoration: underline !important;
+    font-weight: 600;
 }
 
 div[data-testid="stChatMessage"] code {
-    color: #38bdf8 !important;
-    -webkit-text-fill-color: #38bdf8 !important;
-    background: rgba(255,255,255,0.08) !important;
-    padding: 2px 6px !important;
+    color: #4338ca !important;
+    -webkit-text-fill-color: #4338ca !important;
+    background: #f1f5f9 !important;
+    padding: 2px 7px !important;
     border-radius: 6px !important;
+    border: 1px solid #e2e8f0 !important;
     font-family: 'JetBrains Mono', monospace !important;
 }
 
-/* User Message Bubble — Sleek Floating Purple-Indigo Glass */
+/* User Message Bubble — Elegant Indigo Gradient with White Text */
 div[data-testid="stChatMessage"]:has(div[data-testid="chatAvatarIcon-user"]) {
-    background: linear-gradient(135deg, rgba(99,102,241,0.35) 0%, rgba(168,85,247,0.25) 100%) !important;
-    border: 1px solid rgba(168,85,247,0.5) !important;
-    border-top: 1px solid rgba(255,255,255,0.3) !important;
-    box-shadow: 0 8px 32px rgba(99,102,241,0.25), inset 0 1px 0 rgba(255,255,255,0.2) !important;
-    border-radius: 20px 20px 6px 20px !important;
+    background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%) !important;
+    border: 1px solid #4338ca !important;
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.22) !important;
+    border-radius: 20px 20px 4px 20px !important;
 }
 
 div[data-testid="stChatMessage"]:has(div[data-testid="chatAvatarIcon-user"]) p,
@@ -221,30 +218,28 @@ div[data-testid="stChatMessage"]:has(div[data-testid="chatAvatarIcon-user"]) div
 
 /* Assistant Bubble Corner */
 div[data-testid="stChatMessage"]:has(div[data-testid="chatAvatarIcon-assistant"]) {
-    border-radius: 6px 20px 20px 20px !important;
+    border-radius: 4px 20px 20px 20px !important;
 }
 
-/* ── Glassmorphism Live Status Widget (st.status) ── */
+/* ── Status Widget ── */
 div[data-testid="stStatusWidget"] {
-    background: rgba(15, 23, 42, 0.8) !important;
-    border: 1.5px solid rgba(168, 85, 247, 0.45) !important;
+    background: #ffffff !important;
+    border: 1.5px solid #e2e8f0 !important;
     border-radius: 16px !important;
-    backdrop-filter: blur(24px) !important;
-    -webkit-backdrop-filter: blur(24px) !important;
-    box-shadow: 0 8px 32px rgba(168, 85, 247, 0.22), inset 0 1px 0 rgba(255,255,255,0.12) !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05) !important;
     margin-bottom: 14px !important;
     padding: 12px 16px !important;
 }
 
 div[data-testid="stStatusWidget"] * {
-    color: #e2e8f0 !important;
+    color: #334155 !important;
     font-size: 0.92rem !important;
 }
 
 div[data-testid="stStatusWidget"] summary {
     font-family: 'Space Grotesk', sans-serif !important;
     font-weight: 700 !important;
-    color: #d8b4fe !important;
+    color: #4338ca !important;
 }
 
 /* ── Top Header ── */
@@ -254,42 +249,39 @@ div[data-testid="stStatusWidget"] summary {
     gap: 16px;
     margin-bottom: 1.4rem;
     padding-bottom: 1.1rem;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .ss-logo-icon {
-    width: 54px;
-    height: 54px;
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #38bdf8 100%);
-    border-radius: 18px;
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #d97706 100%);
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 26px;
-    box-shadow: 0 0 32px rgba(99,102,241,0.55), 0 4px 14px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.25);
     flex-shrink: 0;
-    border: 1px solid rgba(255,255,255,0.2);
 }
 
 .ss-logo-text { display: flex; flex-direction: column; }
 .ss-logo-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.7rem;
-    font-weight: 700;
-    background: linear-gradient(90deg, #818cf8, #c084fc, #38bdf8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #0f172a;
     line-height: 1.15;
     letter-spacing: -0.4px;
 }
 
 .ss-logo-sub {
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: #64748b;
     letter-spacing: 1.4px;
     text-transform: uppercase;
-    font-weight: 600;
-    margin-top: 2px;
+    font-weight: 700;
+    margin-top: 3px;
 }
 
 .ss-mode-badge {
@@ -303,7 +295,6 @@ div[data-testid="stStatusWidget"] summary {
     display: flex;
     align-items: center;
     gap: 8px;
-    backdrop-filter: blur(16px);
 }
 
 .ss-mode-badge::before {
@@ -315,25 +306,21 @@ div[data-testid="stStatusWidget"] summary {
 }
 
 .ss-mode-badge.sales {
-    background: rgba(99,102,241,0.22);
-    border: 1px solid rgba(99,102,241,0.5);
-    color: #c7d2fe;
-    box-shadow: 0 0 16px rgba(99,102,241,0.25);
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    color: #4338ca;
 }
 .ss-mode-badge.sales::before {
-    background: #818cf8;
-    box-shadow: 0 0 10px #818cf8;
+    background: #4f46e5;
 }
 
 .ss-mode-badge.support {
-    background: rgba(249,115,22,0.22);
-    border: 1px solid rgba(249,115,22,0.5);
-    color: #fed7aa;
-    box-shadow: 0 0 16px rgba(249,115,22,0.25);
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    color: #c2410c;
 }
 .ss-mode-badge.support::before {
-    background: #fb923c;
-    box-shadow: 0 0 10px #fb923c;
+    background: #ea580c;
 }
 
 .agent-badge-pill {
@@ -347,67 +334,61 @@ div[data-testid="stStatusWidget"] summary {
     margin-bottom: 8px;
 }
 .agent-badge-pill.sales {
-    background: rgba(99,102,241,0.28);
-    color: #c7d2fe;
-    border: 1px solid rgba(99,102,241,0.5);
-    box-shadow: 0 0 12px rgba(99,102,241,0.2);
+    background: #eef2ff;
+    color: #4338ca;
+    border: 1px solid #c7d2fe;
 }
 .agent-badge-pill.support {
-    background: rgba(249,115,22,0.28);
-    color: #fed7aa;
-    border: 1px solid rgba(249,115,22,0.5);
-    box-shadow: 0 0 12px rgba(249,115,22,0.2);
+    background: #fff7ed;
+    color: #c2410c;
+    border: 1px solid #fed7aa;
 }
 .agent-badge-pill.supervisor {
-    background: rgba(168,85,247,0.28);
-    color: #e9d5ff;
-    border: 1px solid rgba(168,85,247,0.5);
-    box-shadow: 0 0 12px rgba(168,85,247,0.2);
+    background: #faf5ff;
+    color: #7e22ce;
+    border: 1px solid #e9d5ff;
 }
 
 /* ── Modern Expanders ── */
 details[data-testid="stExpander"] {
-    background: rgba(14, 20, 44, 0.75) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
     border-radius: 16px !important;
-    backdrop-filter: blur(20px) !important;
     margin-bottom: 12px !important;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03) !important;
 }
 details[data-testid="stExpander"] summary {
-    color: #e2e8f0 !important;
+    color: #1e293b !important;
     font-weight: 600 !important;
 }
 details[data-testid="stExpander"] summary:hover {
-    color: #818cf8 !important;
+    color: #4f46e5 !important;
 }
 details[data-testid="stExpander"] * {
-    color: #e2e8f0 !important;
+    color: #334155 !important;
 }
 
 /* ── Welcome Hero ── */
 .welcome-hero {
     text-align: center;
-    padding: 2.2rem 1.8rem 1.4rem;
-    background: rgba(15, 23, 42, 0.65);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-top: 1px solid rgba(255,255,255,0.25);
+    padding: 2.2rem 1.8rem 1.6rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     border-radius: 24px;
     margin-bottom: 1.6rem;
-    backdrop-filter: blur(28px) saturate(180%);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.15);
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.04);
 }
 .welcome-icon { font-size: 3rem; margin-bottom: 10px; }
 .welcome-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.55rem;
-    font-weight: 700;
-    color: #f8fafc;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #0f172a;
     margin-bottom: 8px;
 }
 .welcome-subtitle {
-    font-size: 0.92rem;
-    color: #cbd5e1;
+    font-size: 0.95rem;
+    color: #475569;
     max-width: 640px;
     margin: 0 auto;
     line-height: 1.65;
@@ -415,8 +396,8 @@ details[data-testid="stExpander"] * {
 
 /* ── Cart Drawer (Sidebar) ── */
 .cart-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     border-radius: 12px;
     padding: 10px 14px;
     margin-bottom: 8px;
@@ -424,17 +405,17 @@ details[data-testid="stExpander"] * {
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    transition: all 0.2s;
 }
 .cart-card:hover {
-    background: rgba(99,102,241,0.15);
-    border-color: rgba(99,102,241,0.4);
+    background: #f1f5f9;
+    border-color: #cbd5e1;
     transform: translateY(-1px);
 }
 .cart-card-name {
-    font-size: 0.85rem;
-    color: #f1f5f9;
-    font-weight: 500;
+    font-size: 0.86rem;
+    color: #0f172a;
+    font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -447,44 +428,42 @@ details[data-testid="stExpander"] * {
     flex-shrink: 0;
 }
 .cart-qty {
-    background: rgba(99,102,241,0.25);
-    color: #c7d2fe;
+    background: #eef2ff;
+    color: #4338ca;
     border-radius: 8px;
     padding: 2px 7px;
     font-size: 0.75rem;
     font-weight: 700;
 }
 .cart-price {
-    color: #34d399;
-    font-size: 0.86rem;
+    color: #059669;
+    font-size: 0.88rem;
     font-weight: 700;
 }
 .cart-total-box {
-    background: rgba(16,185,129,0.12);
-    border: 1px solid rgba(16,185,129,0.35);
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
     border-radius: 14px;
     padding: 12px 14px;
     margin: 12px 0 10px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 16px rgba(16,185,129,0.15);
 }
-.cart-total-label { font-size: 0.85rem; color: #a7f3d0; font-weight: 600; }
-.cart-total-val { font-size: 1.25rem; font-weight: 800; color: #34d399; }
+.cart-total-label { font-size: 0.85rem; color: #047857; font-weight: 700; }
+.cart-total-val { font-size: 1.3rem; font-weight: 800; color: #059669; }
 
 /* ── Approval Panel ── */
 .approval-panel {
-    background: rgba(168,85,247,0.1);
-    border: 1.5px solid rgba(168,85,247,0.45);
+    background: #fdf4ff;
+    border: 1.5px solid #f0abfc;
     border-radius: 18px;
     padding: 20px 24px;
     margin: 18px 0;
-    box-shadow: 0 0 36px rgba(168,85,247,0.18), inset 0 1px 0 rgba(255,255,255,0.1);
-    backdrop-filter: blur(24px);
+    box-shadow: 0 4px 18px rgba(168, 85, 247, 0.08);
 }
 .approval-panel h4 {
-    color: #e9d5ff;
+    color: #86198f;
     font-family: 'Space Grotesk',sans-serif;
     font-size: 1.1rem;
     margin: 0 0 12px 0;
@@ -493,8 +472,8 @@ details[data-testid="stExpander"] * {
     gap: 8px;
 }
 .approval-row { display: flex; gap: 10px; margin-bottom: 6px; font-size: 0.88rem; }
-.approval-row .label { color: #94a3b8; min-width: 85px; font-weight: 600; }
-.approval-row .value { color: #f1f5f9; }
+.approval-row .label { color: #64748b; min-width: 85px; font-weight: 600; }
+.approval-row .value { color: #0f172a; font-weight: 500; }
 .sev-pill {
     padding: 2px 10px;
     border-radius: 8px;
@@ -502,28 +481,26 @@ details[data-testid="stExpander"] * {
     font-size: 0.72rem;
     text-transform: uppercase;
 }
-.sev-high { background: rgba(239,68,68,0.25); color: #f87171; border: 1px solid rgba(239,68,68,0.5); }
-.sev-medium { background: rgba(245,158,11,0.25); color: #fbbf24; border: 1px solid rgba(245,158,11,0.5); }
-.sev-low { background: rgba(16,185,129,0.25); color: #34d399; border: 1px solid rgba(16,185,129,0.5); }
+.sev-high { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
+.sev-medium { background: #fef3c7; color: #d97706; border: 1px solid #fde68a; }
+.sev-low { background: #dcfce7; color: #16a34a; border: 1px solid #bbf7d0; }
 
 /* ── Modern Buttons with Specular Lift ── */
 .stButton > button {
-    background: rgba(15, 23, 42, 0.65) !important;
-    backdrop-filter: blur(18px) !important;
-    -webkit-backdrop-filter: blur(18px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    border-radius: 14px !important;
-    color: #e2e8f0 !important;
-    font-size: 0.86rem !important;
+    background: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 12px !important;
+    color: #1e293b !important;
+    font-size: 0.88rem !important;
     font-weight: 600 !important;
-    padding: 9px 16px !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    padding: 9px 18px !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 .stButton > button:hover {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.35) 0%, rgba(168, 85, 247, 0.28) 100%) !important;
-    border-color: rgba(168, 85, 247, 0.6) !important;
-    box-shadow: 0 8px 28px rgba(99, 102, 241, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+    border-color: #4338ca !important;
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.22) !important;
     color: #ffffff !important;
     transform: translateY(-2px) !important;
 }
@@ -531,46 +508,42 @@ details[data-testid="stExpander"] * {
 /* Sidebar Section Headers */
 .sb-brand {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.3rem;
-    font-weight: 700;
-    background: linear-gradient(90deg, #818cf8, #c084fc, #38bdf8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
     margin-bottom: 1.4rem;
     display: flex;
     align-items: center;
     gap: 10px;
 }
 .sb-section-title {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 1.6px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: #64748b;
     margin-bottom: 10px;
     padding-bottom: 4px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid #e2e8f0;
 }
 .session-pill {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     border-radius: 10px;
     padding: 9px 12px;
-    font-size: 0.82rem;
-    color: #cbd5e1;
+    font-size: 0.84rem;
+    color: #334155;
     margin-bottom: 6px;
 }
-.session-pill strong { color: #f8fafc; font-weight: 600; }
+.session-pill strong { color: #0f172a; font-weight: 700; }
 
 /* ── Product Detail Page & Action Badges ── */
 .prod-page-container {
-    background: rgba(13, 18, 40, 0.82) !important;
-    border: 1.5px solid rgba(168, 85, 247, 0.4) !important;
+    background: #ffffff !important;
+    border: 1.5px solid #e2e8f0 !important;
     border-radius: 24px !important;
     padding: 28px !important;
-    backdrop-filter: blur(32px) !important;
-    -webkit-backdrop-filter: blur(32px) !important;
-    box-shadow: 0 16px 48px rgba(0,0,0,0.65), 0 0 32px rgba(99,102,241,0.2) !important;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06) !important;
     margin-bottom: 24px !important;
 }
 
@@ -578,13 +551,13 @@ details[data-testid="stExpander"] * {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(99,102,241,0.18);
-    border: 1px solid rgba(99,102,241,0.4);
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
     border-radius: 9999px;
     padding: 4px 14px;
     font-size: 0.78rem;
     font-weight: 700;
-    color: #a5b4fc;
+    color: #4338ca;
     letter-spacing: 0.5px;
     text-transform: uppercase;
 }
@@ -593,7 +566,7 @@ details[data-testid="stExpander"] * {
     font-family: 'Space Grotesk', sans-serif !important;
     font-size: 1.75rem !important;
     font-weight: 800 !important;
-    color: #ffffff !important;
+    color: #0f172a !important;
     line-height: 1.35 !important;
     margin: 12px 0 !important;
 }
@@ -602,8 +575,7 @@ details[data-testid="stExpander"] * {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 2.2rem;
     font-weight: 800;
-    color: #38bdf8;
-    text-shadow: 0 0 20px rgba(56,189,248,0.4);
+    color: #059669;
     margin-right: 18px;
 }
 
@@ -615,8 +587,8 @@ details[data-testid="stExpander"] * {
 }
 
 .prod-spec-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     border-radius: 14px;
     padding: 12px 14px;
 }
@@ -625,34 +597,34 @@ details[data-testid="stExpander"] * {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #94a3b8;
+    color: #64748b;
     margin-bottom: 4px;
 }
 .prod-spec-val {
     font-size: 0.95rem;
     font-weight: 700;
-    color: #f1f5f9;
+    color: #0f172a;
 }
 
 .order-celebrate-box {
-    background: linear-gradient(135deg, rgba(16,185,129,0.2) 0%, rgba(99,102,241,0.2) 100%);
-    border: 1.5px solid rgba(52,211,153,0.55);
+    background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+    border: 1.5px solid #6ee7b7;
     border-radius: 18px;
     padding: 20px 24px;
-    box-shadow: 0 10px 30px rgba(16,185,129,0.25);
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.12);
     margin-bottom: 22px;
 }
 
 .prod-tap-header {
     margin-top: 14px;
     margin-bottom: 8px;
-    font-size: 0.82rem;
-    color: #c084fc;
+    font-size: 0.85rem;
+    color: #4338ca;
     letter-spacing: 0.5px;
     font-weight: 700;
 }
 
-hr { border-color: rgba(255,255,255,0.08) !important; margin: 16px 0 !important; }
+hr { border-color: #e2e8f0 !important; margin: 16px 0 !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -1177,7 +1149,7 @@ with st.sidebar:
     # ── Direct Product Page Explorer ──
     df_cat = get_catalog_data()
     if not df_cat.empty:
-        with st.expander("🛍️ Direct Product Explorer (116)", expanded=False):
+        with st.expander(f"🛍️ Direct Product Explorer ({len(df_cat)} Items)", expanded=False):
             prod_options = {
                 int(row["product_id"]): f"#{int(row['product_id'])} · {str(row['product_name'])[:28]}... (${float(row.get('price', 0.0)):.2f})"
                 for _, row in df_cat.iterrows()
@@ -1192,25 +1164,25 @@ with st.sidebar:
                 st.session_state.active_product_id = sel_pid
                 st.rerun()
 
-    with st.expander("📁 Department Catalog (10)", expanded=False):
+    with st.expander("📁 Department Catalog (10 Categories)", expanded=False):
         st.markdown("""
-        * **📱 Electronics**: 16 items
-        * **💻 Computers**: 15 items
-        * **🎧 Audio & Sound**: 10 items
-        * **👟 Footwear**: 11 items
-        * **🧥 Fashion**: 11 items
-        * **☕ Home & Kitchen**: 13 items
-        * **🏃 Sports**: 9 items
-        * **✨ Beauty**: 11 items
-        * **🍫 Gourmet**: 10 items
-        * **📚 Books**: 10 items
+        * **📱 Electronics & Mobile**: Flagship smartphones, tablets, smartwatches, fast chargers
+        * **💻 Computers & Gaming**: M3 Max MacBooks, OLED displays, PS5 Pro, custom keyboards
+        * **🎧 Audio & Sound**: Noise-cancelling headphones, waterproof Bluetooth speakers
+        * **👟 Footwear & Athletic**: Road & trail marathon shoes, waterproof hiking boots
+        * **🧥 Fashion & Outerwear**: GORE-TEX alpine shells, 800-fill down parkas, travel bags
+        * **☕ Home & Kitchen**: Touchscreen espresso machines, commercial blenders, cast iron
+        * **🏃 Sports & Outdoors**: Percussive therapy, adjustable dumbbells, ultralight tents
+        * **✨ Beauty, Skincare & Sun Care**: Wet-skin sunscreens, mineral zinc, targeted serums
+        * **🍫 Gourmet & Nutrition**: Whey isolate, ceremonial Uji matcha, zero-sugar electrolytes
+        * **📚 Books & Stationery**: Sci-fi masterpieces, productivity classics, luxury fountain pens
         """)
 
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("""
-    <div style="font-size:0.7rem;color:#475569;text-align:center;line-height:1.8;">
+    <div style="font-size:0.75rem;color:#64748b;text-align:center;line-height:1.8;">
         LangGraph &nbsp;·&nbsp; Gemini &nbsp;·&nbsp; ChromaDB<br>
-        <span style="color:#6366f1;font-weight:600;">SmartShop Elite v2.5</span>
+        <span style="color:#4f46e5;font-weight:700;">SmartShop Elite v2.5 · Classic Edition</span>
     </div>""", unsafe_allow_html=True)
 
 
@@ -1236,20 +1208,20 @@ if st.session_state.get("active_product_id"):
     render_product_page(st.session_state.active_product_id)
 else:
     # ── Permanent Catalog & Questions Guide ──
-    with st.expander("💡 What Products Can I Ask About? (Browse 116 Items Across 10 Departments)", expanded=not bool(st.session_state.chat_history)):
+    with st.expander("💡 What Products Can I Ask About? (Browse 325+ Items Across 10 Departments)", expanded=not bool(st.session_state.chat_history)):
         st.markdown("""
-        You can ask me to **recommend**, **search**, **compare**, or **check reviews & specs** for products across our catalog:
+        You can ask me to **recommend**, **search**, **compare**, or **check specifications & reviews** for products across our catalog:
         
-        * **📱 Electronics**: *Apple iPhone 16 Pro Max, Samsung Galaxy S24 Ultra, Google Pixel 9 Pro, OnePlus 12, iPad Pro M4, Apple Watch Ultra 2, Kindle Paperwhite*
-        * **💻 Computers & Gaming**: *MacBook Pro 16" M3 Max, MacBook Air 15" M3, Dell XPS 14 OLED, Razer Blade 16, Logitech MX Master 3S, Keychron Q1 Pro*
-        * **🎧 Audio & Sound**: *Sony WH-1000XM5, Bose QuietComfort Ultra, Apple AirPods Max, Sonos Move 2, JBL Charge 5, Sennheiser Momentum 4*
-        * **👟 Footwear**: *Nike Air Zoom Pegasus 41, Hoka Clifton 9, Brooks Ghost 16, On Cloudmonster 2, Asics Gel-Kayano 31, Adidas Ultraboost Light*
-        * **🧥 Fashion & Apparel**: *The North Face 1996 Retro Nuptse, Arc'teryx Beta LT GORE-TEX, Patagonia Nano Puff, Lululemon Scuba Hoodie*
-        * **☕ Home & Kitchen**: *Breville Barista Touch Impress, Nespresso VertuoPlus, Fellow Ode Gen 2 Burr Grinder, Ninja Air Fryer Max XL, Le Creuset Dutch Oven*
-        * **🏃 Sports & Outdoors**: *WHOOP 4.0 Health Tracker, Oura Ring Gen3 Horizon, Manduka PRO Yoga Mat, Bowflex SelectTech Dumbbells*
-        * **✨ Beauty & Skincare**: *The Ordinary Niacinamide + Zinc, CeraVe Hydrating Cleanser, Paula's Choice 2% BHA Salicylic Acid, Dyson Supersonic Hair Dryer*
-        * **🍫 Gourmet & Snacks**: *RXBAR Protein Variety Pack, Barebells Creamy Crisp 20g, Blue Bottle Bella Donovan Beans, Compartes Luxury Truffles*
-        * **📚 Books & Stationery**: *Project Hail Mary, Dune Deluxe Edition, Tomorrow and Tomorrow and Tomorrow, Leuchtturm1917 Hardcover Notebook*
+        * **✨ Beauty, Skincare & Sun Care**: *Neutrogena Wet Skin Kids Spray SPF 70+ (cuts through water), Neutrogena Wet Skin Stick SPF 70+, Shiseido SynchroShield WetForce SPF 50+, La Roche-Posay Anthelios Melt-in Milk SPF 60, EltaMD UV Clear SPF 46, Supergoop! Unseen SPF 40, Biore UV Aqua Rich Watery Essence, Skin1004 Centella Sun Serum, Beauty of Joseon Relief Sun*
+        * **📱 Electronics & Mobile**: *Apple iPhone 16 Pro Max, Samsung Galaxy S24 Ultra, Google Pixel 9 Pro XL, OnePlus 12, iPad Pro 13" M4 OLED, Apple Watch Ultra 2, Garmin Fenix 8, Anker Prime 27650mAh*
+        * **💻 Computers & Gaming**: *MacBook Pro 16" M3 Max, Dell XPS 16 OLED, ASUS ROG Zephyrus G16, PS5 Pro 2TB, Steam Deck OLED 1TB, Keychron Q1 Pro, Logitech MX Master 3S*
+        * **🎧 Audio & Sound**: *Sony WH-1000XM5, Bose QuietComfort Ultra, Apple AirPods Max, AirPods Pro 2 USB-C, Sonos Arc Soundbar, JBL Charge 5 Waterproof*
+        * **👟 Footwear**: *Nike Alphafly 3 Marathon Shoes, Hoka Bondi 8 Max Cushion, Brooks Ghost 16, Salomon Speedcross 6 GORE-TEX, New Balance 990v6, Merrell Moab 3*
+        * **🧥 Fashion & Apparel**: *Arc'teryx Beta AR GORE-TEX Pro, Patagonia Down Sweater Hoody, The North Face 1996 Nuptse, Bellroy Classic Backpack Plus*
+        * **☕ Home & Kitchen**: *Breville Barista Touch Impress, Fellow Ode Gen 2 Grinder, Vitamix A3500 Ascent, Roborock S8 Pro Ultra, Dyson V15 Detect, Le Creuset Dutch Oven*
+        * **🏃 Sports & Outdoors**: *Theragun PRO Plus 6-in-1, Bowflex SelectTech 552 Dumbbells, Manduka PRO Yoga Mat, MSR Hubba Hubba 2-Person Tent, Hydro Flask 32oz*
+        * **🍫 Gourmet & Nutrition**: *Optimum Nutrition Gold Standard Whey, Stumptown Hair Bender Coffee, Ippodo Sayaka Ceremonial Matcha, LMNT Electrolyte Variety Pack*
+        * **📚 Books & Stationery**: *Project Hail Mary, Dune Deluxe Hardcover, Atomic Habits, Pilot Custom 823 Fountain Pen, Leuchtturm1919 Journal*
         """)
 
     # ── WELCOME HERO & QUICK-START CARDS (When chat is empty) ──
@@ -1260,34 +1232,33 @@ else:
             <div class="welcome-title">Welcome to SmartShop Elite</div>
             <div class="welcome-subtitle">
                 Your personal retail concierge powered by LangGraph multi-agent architecture and Google Gemini.
-                Discover products with vector search, compare specs, analyze review sentiment, and manage your cart seamlessly.
+                Discover 325+ products with semantic vector search, analyze detailed specifications, compare items, and enjoy seamless one-click ordering.
             </div>
         </div>
         """, unsafe_allow_html=True)
 
-        st.markdown('<div style="text-align:center;font-size:0.75rem;font-weight:700;letter-spacing:1.4px;color:#818cf8;text-transform:uppercase;margin-bottom:14px;">Quick Start Suggestions</div>', unsafe_allow_html=True)
+        st.markdown('<div style="text-align:center;font-size:0.75rem;font-weight:800;letter-spacing:1.5px;color:#4f46e5;text-transform:uppercase;margin-bottom:14px;">Curated Suggestions & Prompts</div>', unsafe_allow_html=True)
 
         col1, col2 = st.columns(2)
         with col1:
+            if st.button("☀️ Sunscreens with wet skin application technology", key="hero_sug_sunscreen", use_container_width=True):
+                send_user_message("Suggest sunscreens with wet skin technology and analyze their specifications.")
+                st.rerun()
             if st.button("🎧 Compare Sony WH-1000XM5 & Bose Ultra", key="hero_sug_audio", use_container_width=True):
                 send_user_message("Compare Sony WH-1000XM5 and Bose QuietComfort Ultra headphones.")
                 st.rerun()
-            if st.button("👟 Find top-rated running shoes with good cushioning", key="hero_sug_shoes", use_container_width=True):
-                send_user_message("Find top-rated running shoes with good cushioning under $200.")
-                st.rerun()
-            if st.button("☕ Recommend the best home espresso machines", key="hero_sug_coffee", use_container_width=True):
-                send_user_message("Recommend the best home espresso machines.")
+            if st.button("👟 Find top-rated running shoes with maximum cushioning", key="hero_sug_shoes", use_container_width=True):
+                send_user_message("Find top-rated running shoes with maximum cushioning.")
                 st.rerun()
         with col2:
-            if st.button("💻 Find Apple MacBook & premium ultrabooks", key="hero_sug_laptop", use_container_width=True):
-                send_user_message("Find Apple MacBook and high-performance ultrabooks.")
+            if st.button("💻 Find Apple MacBook & pro creator laptops", key="hero_sug_laptop", use_container_width=True):
+                send_user_message("Find Apple MacBook and high-performance creator laptops.")
                 st.rerun()
-            if st.button("📦 Track my recent order status", key="hero_sug_orders", use_container_width=True):
+            if st.button("☕ Recommend the best home barista espresso machines", key="hero_sug_coffee", use_container_width=True):
+                send_user_message("Recommend the best home barista espresso machines.")
+                st.rerun()
+            if st.button("📦 Track my recent orders and delivery status", key="hero_sug_orders", use_container_width=True):
                 send_user_message("Can you track my recent orders?")
-                st.rerun()
-            if st.button("🛒 What's currently in my cart?", key="hero_sug_cart", use_container_width=True):
-                direct_cart_update()
-                send_user_message("What is currently in my shopping cart?")
                 st.rerun()
 
     # ── CHAT MESSAGES DISPLAY (Rich Native Markdown + Glass Cards) ──

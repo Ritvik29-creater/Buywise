@@ -126,36 +126,102 @@ def make_query_prompt(query: str) -> str:
 
 def search_products(query: str, top_k: int = 5) -> List[Dict]:
     """
-    Perform a semantic vector search over the product catalog.
+    Perform semantic vector search with keyword/specification fallback and
+    nearest-alternative recommendation over the product catalog.
     """
+    formatted_results = []
+    seen_ids = set()
+
+    # 1. Semantic Vector Search
     try:
         vector_store = get_vector_store()
         query_prompt = make_query_prompt(query)
         results = vector_store.similarity_search(query_prompt, k=top_k)
-        formatted_results = []
         for doc in results:
             pid = doc.metadata.get("product_id")
-            price = doc.metadata.get("price")
-            if price is None and pid:
-                price = get_product_price(int(pid))
-            formatted_results.append(
-                {
-                    "product_id": pid,
-                    "product_name": doc.metadata.get("product_name"),
-                    "brand": doc.metadata.get("brand", _product_brand_lookup.get(pid, "")),
-                    "price": float(price) if price is not None else 0.0,
-                    "rating": doc.metadata.get("rating", _product_rating_lookup.get(pid, 4.8)),
-                    "review_count": doc.metadata.get("review_count", _product_reviews_lookup.get(pid, 120)),
-                    "aisle": doc.metadata.get("aisle"),
-                    "department": doc.metadata.get("department"),
-                    "description": doc.metadata.get("description", _product_desc_lookup.get(pid, "")),
-                    "text": doc.page_content,
-                }
-            )
-        return formatted_results
+            if pid and pid not in seen_ids:
+                seen_ids.add(pid)
+                price = doc.metadata.get("price") or get_product_price(int(pid))
+                formatted_results.append({
+                    "product_id": int(pid),
+                    "product_name": str(doc.metadata.get("product_name", "")),
+                    "brand": str(doc.metadata.get("brand", _product_brand_lookup.get(pid, ""))),
+                    "price": float(price),
+                    "rating": float(doc.metadata.get("rating", _product_rating_lookup.get(pid, 4.8))),
+                    "review_count": int(doc.metadata.get("review_count", _product_reviews_lookup.get(pid, 120))),
+                    "aisle": str(doc.metadata.get("aisle", "")),
+                    "department": str(doc.metadata.get("department", "")),
+                    "description": str(doc.metadata.get("description", _product_desc_lookup.get(pid, ""))),
+                    "text": str(doc.page_content),
+                })
     except Exception as e:
-        print(f"Vector search failed: {e}")
-        return []
+        print(f"Vector search failed (using fallback): {e}")
+
+    # If vector search returned enough results, return them directly
+    if len(formatted_results) >= top_k or (formatted_results and len(formatted_results) >= 2):
+        return formatted_results[:top_k]
+
+    # 2. Keyword & Specification Matching against catalog (Fallback & Enrichment)
+    query_tokens = [w.lower().strip(" ,.!?\"'()") for w in query.split() if len(w) > 2]
+    expanded_tokens = set(query_tokens)
+    if "screen" in query_tokens and any(t in query.lower() for t in ["sun", "wet", "lotion", "spf", "cream"]):
+        expanded_tokens.add("skin")
+    if "wet" in query_tokens:
+        expanded_tokens.update(["waterproof", "water", "sweat", "wetforce", "water-resistant"])
+
+    keyword_hits = []
+    if hasattr(products, "iterrows"):
+        for _, row in products.iterrows():
+            pid = int(row["product_id"])
+            if pid in seen_ids:
+                continue
+            p_name = str(row.get("product_name", "")).lower()
+            p_desc = str(row.get("description", "")).lower()
+            p_brand = str(row.get("brand", "")).lower()
+            
+            match_score = sum(3 for tok in expanded_tokens if tok in p_name) + \
+                          sum(1 for tok in expanded_tokens if tok in p_desc) + \
+                          sum(2 for tok in expanded_tokens if tok in p_brand)
+            if match_score > 0:
+                keyword_hits.append((match_score, {
+                    "product_id": pid,
+                    "product_name": str(row.get("product_name", "")),
+                    "brand": str(row.get("brand", "")),
+                    "price": float(row.get("price", get_product_price(pid))),
+                    "rating": float(row.get("rating", 4.8)),
+                    "review_count": int(row.get("review_count", 100)),
+                    "aisle": str(row.get("aisle", "")),
+                    "department": str(row.get("department", "")),
+                    "description": str(row.get("description", "")),
+                    "text": f"{row.get('product_name', '')} {row.get('description', '')}",
+                }))
+
+        keyword_hits.sort(key=lambda x: x[0], reverse=True)
+        for _, item in keyword_hits:
+            if len(formatted_results) < top_k:
+                formatted_results.append(item)
+                seen_ids.add(item["product_id"])
+
+    # 3. Last Resort Fallback: Closest/Top-Rated Products as Nearest Alternatives
+    if not formatted_results and hasattr(products, "sort_values"):
+        fallback_df = products.sort_values(by="rating", ascending=False).head(top_k)
+        for _, row in fallback_df.iterrows():
+            pid = int(row["product_id"])
+            formatted_results.append({
+                "product_id": pid,
+                "product_name": str(row.get("product_name", "")),
+                "brand": str(row.get("brand", "")),
+                "price": float(row.get("price", get_product_price(pid))),
+                "rating": float(row.get("rating", 4.8)),
+                "review_count": int(row.get("review_count", 100)),
+                "aisle": str(row.get("aisle", "")),
+                "department": str(row.get("department", "")),
+                "description": str(row.get("description", "")),
+                "text": str(row.get("description", "")),
+                "is_fallback": True
+            })
+
+    return formatted_results[:top_k]
 
 
 @tool
