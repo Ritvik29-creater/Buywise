@@ -26,33 +26,33 @@ st.set_page_config(
 # ── Ultra-Premium Design System & CSS ─────────────────────────────────────────
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; }
 
 html, body, [class*="css"], .stApp {
-    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif !important;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
     background: #f8fafc !important;
     color: #0f172a !important;
 }
 
-/* ── CLASSIC LUXURY LIGHT CANVAS ── */
+/* ── LUXURY LIGHT MESH CANVAS ── */
 .stApp {
     background:
-        radial-gradient(circle at 8% 10%, rgba(99, 102, 241, 0.07) 0%, transparent 45%),
-        radial-gradient(circle at 92% 14%, rgba(217, 119, 6, 0.05) 0%, transparent 42%),
-        radial-gradient(circle at 50% 60%, rgba(241, 245, 249, 0.6) 0%, transparent 55%),
-        linear-gradient(180deg, #ffffff 0%, #f8fafc 40%, #f1f5f9 100%) !important;
+        radial-gradient(1100px circle at 12% 10%, rgba(99, 102, 241, 0.08) 0%, transparent 60%),
+        radial-gradient(900px circle at 88% 12%, rgba(245, 158, 11, 0.06) 0%, transparent 55%),
+        radial-gradient(1000px circle at 50% 65%, rgba(16, 185, 129, 0.05) 0%, transparent 60%),
+        linear-gradient(180deg, #ffffff 0%, #f8fafc 35%, #f1f5f9 100%) !important;
     background-attachment: fixed !important;
 }
 
-/* ── LUMINOUS SIDEBAR ── */
+/* ── LUMINOUS FROSTED SIDEBAR ── */
 section[data-testid="stSidebar"] {
-    background: rgba(255, 255, 255, 0.92) !important;
-    backdrop-filter: blur(28px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
-    border-right: 1px solid rgba(226, 232, 240, 0.9) !important;
-    box-shadow: 4px 0 28px rgba(15, 23, 42, 0.04) !important;
+    background: rgba(255, 255, 255, 0.94) !important;
+    backdrop-filter: blur(28px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+    border-right: 1px solid rgba(226, 232, 240, 0.95) !important;
+    box-shadow: 6px 0 32px rgba(15, 23, 42, 0.04) !important;
 }
 
 section[data-testid="stSidebar"] * {
@@ -66,11 +66,11 @@ section[data-testid="stSidebar"] > div {
 }
 
 .main .block-container {
-    padding: 1.5rem 2rem 7.5rem 2rem !important;
-    max-width: 980px !important;
+    padding: 1.4rem 2.2rem 8rem 2.2rem !important;
+    max-width: 1020px !important;
 }
 
-/* Hide Streamlit Chrome & Headers */
+/* Hide Default Streamlit Chrome */
 #MainMenu, footer, header {
     visibility: hidden !important;
     display: none !important;
@@ -90,21 +90,22 @@ div[data-testid="stChatFloatingInputContainer"],
     border: none !important;
 }
 
-/* ── LUXURY LIGHT CHAT INPUT ── */
+/* ── FLOATING LUXURY CHAT INPUT ── */
 div[data-testid="stChatInput"] {
     background: #ffffff !important;
     background-color: #ffffff !important;
     border: 1.5px solid #cbd5e1 !important;
-    border-radius: 20px !important;
-    box-shadow: 0 10px 32px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+    border-radius: 22px !important;
+    box-shadow: 0 12px 36px rgba(15, 23, 42, 0.09), 0 2px 6px rgba(0, 0, 0, 0.03) !important;
     backdrop-filter: blur(24px) !important;
     -webkit-backdrop-filter: blur(24px) !important;
-    transition: all 0.25s ease !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 div[data-testid="stChatInput"]:focus-within {
     border-color: #4f46e5 !important;
-    box-shadow: 0 12px 38px rgba(79, 70, 229, 0.16), 0 0 0 3px rgba(79, 70, 229, 0.12) !important;
+    box-shadow: 0 14px 44px rgba(79, 70, 229, 0.18), 0 0 0 3.5px rgba(79, 70, 229, 0.14) !important;
+    transform: translateY(-1px) !important;
 }
 
 div[data-testid="stChatInput"] textarea {
@@ -112,7 +113,7 @@ div[data-testid="stChatInput"] textarea {
     -webkit-text-fill-color: #0f172a !important;
     background: transparent !important;
     background-color: transparent !important;
-    font-size: 1rem !important;
+    font-size: 1.02rem !important;
     font-weight: 500 !important;
     line-height: 1.5 !important;
     caret-color: #4f46e5 !important;
@@ -126,31 +127,35 @@ div[data-testid="stChatInput"] textarea::placeholder {
 
 div[data-testid="stChatInput"] button {
     color: #4f46e5 !important;
-    background: transparent !important;
-    transition: transform 0.2s, color 0.2s;
+    background: rgba(79, 70, 229, 0.08) !important;
+    border-radius: 12px !important;
+    padding: 6px !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 div[data-testid="stChatInput"] button:hover {
-    color: #3730a3 !important;
-    transform: scale(1.1);
+    color: #ffffff !important;
+    background: #4f46e5 !important;
+    transform: scale(1.08);
 }
 
-/* ── CRISP LIGHT CHAT MESSAGES ── */
+/* ── CRISP HIGH-CONTRAST CHAT MESSAGES ── */
 div[data-testid="stChatMessage"] {
     background: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
-    border-radius: 18px !important;
-    padding: 1.25rem 1.45rem !important;
-    margin-bottom: 1.1rem !important;
-    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02) !important;
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 20px !important;
+    padding: 1.35rem 1.6rem !important;
+    margin-bottom: 1.2rem !important;
+    box-shadow: 0 6px 24px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 div[data-testid="stChatMessage"]:hover {
     border-color: #cbd5e1 !important;
-    box-shadow: 0 8px 26px rgba(15, 23, 42, 0.07) !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08) !important;
+    transform: translateY(-1px) !important;
 }
 
-/* High contrast text legibility */
+/* High contrast typography for maximum legibility */
 div[data-testid="stChatMessage"] *,
 div[data-testid="stChatMessage"] p,
 div[data-testid="stChatMessage"] span,
@@ -160,8 +165,8 @@ div[data-testid="stChatMessage"] td,
 div[data-testid="stChatMessage"] th {
     color: #1e293b !important;
     -webkit-text-fill-color: #1e293b !important;
-    font-size: 0.98rem !important;
-    line-height: 1.68 !important;
+    font-size: 0.985rem !important;
+    line-height: 1.72 !important;
 }
 
 div[data-testid="stChatMessage"] strong,
@@ -175,37 +180,44 @@ div[data-testid="stChatMessage"] h1,
 div[data-testid="stChatMessage"] h2,
 div[data-testid="stChatMessage"] h3,
 div[data-testid="stChatMessage"] h4 {
-    color: #1e1b4b !important;
-    -webkit-text-fill-color: #1e1b4b !important;
-    font-family: 'Space Grotesk', sans-serif !important;
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+    font-family: 'Outfit', sans-serif !important;
     font-weight: 700 !important;
-    margin-top: 0.8rem !important;
-    margin-bottom: 0.4rem !important;
+    margin-top: 0.9rem !important;
+    margin-bottom: 0.45rem !important;
+    letter-spacing: -0.3px !important;
 }
 
 div[data-testid="stChatMessage"] a {
-    color: #2563eb !important;
-    -webkit-text-fill-color: #2563eb !important;
-    text-decoration: underline !important;
-    font-weight: 600;
+    color: #4f46e5 !important;
+    -webkit-text-fill-color: #4f46e5 !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+    border-bottom: 1.5px solid rgba(79, 70, 229, 0.3) !important;
+    transition: border-color 0.2s !important;
+}
+div[data-testid="stChatMessage"] a:hover {
+    border-bottom-color: #4f46e5 !important;
 }
 
 div[data-testid="stChatMessage"] code {
     color: #4338ca !important;
     -webkit-text-fill-color: #4338ca !important;
     background: #f1f5f9 !important;
-    padding: 2px 7px !important;
-    border-radius: 6px !important;
+    padding: 3px 8px !important;
+    border-radius: 7px !important;
     border: 1px solid #e2e8f0 !important;
     font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.88rem !important;
 }
 
-/* User Message Bubble — Elegant Indigo Gradient with White Text */
+/* User Message Bubble — Sleek Indigo to Royal Blue Gradient */
 div[data-testid="stChatMessage"]:has(div[data-testid="chatAvatarIcon-user"]) {
-    background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%) !important;
-    border: 1px solid #4338ca !important;
-    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.22) !important;
-    border-radius: 20px 20px 4px 20px !important;
+    background: linear-gradient(135deg, #4338ca 0%, #3b82f6 100%) !important;
+    border: 1px solid #3730a3 !important;
+    box-shadow: 0 8px 24px rgba(67, 56, 202, 0.24) !important;
+    border-radius: 22px 22px 6px 22px !important;
 }
 
 div[data-testid="stChatMessage"]:has(div[data-testid="chatAvatarIcon-user"]) p,
@@ -216,19 +228,20 @@ div[data-testid="stChatMessage"]:has(div[data-testid="chatAvatarIcon-user"]) div
     font-weight: 500 !important;
 }
 
-/* Assistant Bubble Corner */
+/* Assistant Bubble Accent Border */
 div[data-testid="stChatMessage"]:has(div[data-testid="chatAvatarIcon-assistant"]) {
-    border-radius: 4px 20px 20px 20px !important;
+    border-left: 4.5px solid #4f46e5 !important;
+    border-radius: 6px 22px 22px 22px !important;
 }
 
-/* ── Status Widget ── */
+/* ── STATUS WIDGET (Agent Thinking Status) ── */
 div[data-testid="stStatusWidget"] {
     background: #ffffff !important;
     border: 1.5px solid #e2e8f0 !important;
-    border-radius: 16px !important;
-    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05) !important;
-    margin-bottom: 14px !important;
-    padding: 12px 16px !important;
+    border-radius: 18px !important;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05) !important;
+    margin-bottom: 16px !important;
+    padding: 14px 18px !important;
 }
 
 div[data-testid="stStatusWidget"] * {
@@ -237,46 +250,48 @@ div[data-testid="stStatusWidget"] * {
 }
 
 div[data-testid="stStatusWidget"] summary {
-    font-family: 'Space Grotesk', sans-serif !important;
+    font-family: 'Outfit', sans-serif !important;
     font-weight: 700 !important;
     color: #4338ca !important;
 }
 
-/* ── Top Header ── */
+/* ── HEADER BANNER ── */
 .ss-header {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 1.4rem;
-    padding-bottom: 1.1rem;
-    border-bottom: 1px solid #e2e8f0;
+    gap: 18px;
+    margin-bottom: 1.1rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1.5px solid #e2e8f0;
 }
 
 .ss-logo-icon {
-    width: 52px;
-    height: 52px;
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #d97706 100%);
-    border-radius: 16px;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #f59e0b 100%);
+    border-radius: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
-    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.25);
+    font-size: 28px;
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.28);
     flex-shrink: 0;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.ss-logo-icon:hover { transform: scale(1.05) rotate(3deg); }
 
 .ss-logo-text { display: flex; flex-direction: column; }
 .ss-logo-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.65rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.85rem;
     font-weight: 800;
     color: #0f172a;
     line-height: 1.15;
-    letter-spacing: -0.4px;
+    letter-spacing: -0.6px;
 }
 
 .ss-logo-sub {
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     color: #64748b;
     letter-spacing: 1.4px;
     text-transform: uppercase;
@@ -286,48 +301,81 @@ div[data-testid="stStatusWidget"] summary {
 
 .ss-mode-badge {
     margin-left: auto;
-    padding: 6px 18px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
+    padding: 7px 18px;
+    border-radius: 9999px;
+    font-size: 0.76rem;
+    font-weight: 800;
     letter-spacing: 0.8px;
     text-transform: uppercase;
     display: flex;
     align-items: center;
     gap: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
 
 .ss-mode-badge::before {
     content: '';
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
     display: inline-block;
+    box-shadow: 0 0 8px currentColor;
+    animation: pulseBeacon 2s infinite;
+}
+
+@keyframes pulseBeacon {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
 }
 
 .ss-mode-badge.sales {
     background: #eef2ff;
-    border: 1px solid #c7d2fe;
+    border: 1.5px solid #c7d2fe;
     color: #4338ca;
 }
-.ss-mode-badge.sales::before {
-    background: #4f46e5;
-}
+.ss-mode-badge.sales::before { background: #4f46e5; }
 
 .ss-mode-badge.support {
     background: #fff7ed;
-    border: 1px solid #fed7aa;
+    border: 1.5px solid #fed7aa;
     color: #c2410c;
 }
-.ss-mode-badge.support::before {
-    background: #ea580c;
+.ss-mode-badge.support::before { background: #ea580c; }
+
+/* ── QUICK FEATURE STRIP ── */
+.feature-pill-strip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+.feature-pill-item {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 9999px;
+    padding: 5px 14px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #475569;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+.feature-pill-item:hover {
+    border-color: #cbd5e1;
+    color: #0f172a;
+    transform: translateY(-1px);
 }
 
 .agent-badge-pill {
     display: inline-block;
     padding: 3px 12px;
     border-radius: 12px;
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.8px;
@@ -349,73 +397,90 @@ div[data-testid="stStatusWidget"] summary {
     border: 1px solid #e9d5ff;
 }
 
-/* ── Modern Expanders ── */
+/* ── MODERN EXPANDERS ── */
 details[data-testid="stExpander"] {
     background: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
-    border-radius: 16px !important;
-    margin-bottom: 12px !important;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03) !important;
+    border-radius: 18px !important;
+    margin-bottom: 14px !important;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.03) !important;
+    overflow: hidden !important;
 }
 details[data-testid="stExpander"] summary {
-    color: #1e293b !important;
-    font-weight: 600 !important;
+    color: #0f172a !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 700 !important;
+    padding: 12px 18px !important;
+    font-size: 0.95rem !important;
 }
 details[data-testid="stExpander"] summary:hover {
     color: #4f46e5 !important;
+    background: #f8fafc !important;
 }
 details[data-testid="stExpander"] * {
     color: #334155 !important;
 }
 
-/* ── Welcome Hero ── */
+/* ── WELCOME HERO ── */
 .welcome-hero {
     text-align: center;
-    padding: 2.2rem 1.8rem 1.6rem;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 24px;
-    margin-bottom: 1.6rem;
-    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.04);
+    padding: 2.6rem 2rem 2rem;
+    background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+    border: 1.5px solid #e2e8f0;
+    border-radius: 28px;
+    margin-bottom: 1.8rem;
+    box-shadow: 0 10px 32px rgba(15, 23, 42, 0.05);
+    position: relative;
+    overflow: hidden;
 }
-.welcome-icon { font-size: 3rem; margin-bottom: 10px; }
+.welcome-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #4f46e5, #7c3aed, #10b981, #f59e0b);
+}
+.welcome-icon { font-size: 3.2rem; margin-bottom: 12px; }
 .welcome-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.6rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.95rem;
     font-weight: 800;
     color: #0f172a;
     margin-bottom: 8px;
+    letter-spacing: -0.5px;
 }
 .welcome-subtitle {
-    font-size: 0.95rem;
+    font-size: 0.98rem;
     color: #475569;
-    max-width: 640px;
+    max-width: 660px;
     margin: 0 auto;
-    line-height: 1.65;
+    line-height: 1.7;
 }
 
-/* ── Cart Drawer (Sidebar) ── */
+/* ── CART DRAWER (Sidebar) ── */
 .cart-card {
-    background: #f8fafc;
+    background: #ffffff;
     border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 10px 14px;
+    border-radius: 14px;
+    padding: 11px 14px;
     margin-bottom: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.02);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .cart-card:hover {
-    background: #f1f5f9;
+    background: #f8fafc;
     border-color: #cbd5e1;
-    transform: translateY(-1px);
+    transform: translateY(-1.5px);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
 }
 .cart-card-name {
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     color: #0f172a;
-    font-weight: 600;
+    font-weight: 700;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -431,120 +496,122 @@ details[data-testid="stExpander"] * {
     background: #eef2ff;
     color: #4338ca;
     border-radius: 8px;
-    padding: 2px 7px;
-    font-size: 0.75rem;
-    font-weight: 700;
+    padding: 3px 8px;
+    font-size: 0.76rem;
+    font-weight: 800;
 }
 .cart-price {
     color: #059669;
-    font-size: 0.88rem;
-    font-weight: 700;
+    font-size: 0.92rem;
+    font-weight: 800;
 }
 .cart-total-box {
-    background: #ecfdf5;
-    border: 1px solid #a7f3d0;
-    border-radius: 14px;
-    padding: 12px 14px;
-    margin: 12px 0 10px 0;
+    background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+    border: 1.5px solid #a7f3d0;
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin: 14px 0 12px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.08);
 }
-.cart-total-label { font-size: 0.85rem; color: #047857; font-weight: 700; }
-.cart-total-val { font-size: 1.3rem; font-weight: 800; color: #059669; }
+.cart-total-label { font-size: 0.88rem; color: #047857; font-weight: 700; }
+.cart-total-val { font-size: 1.35rem; font-weight: 900; color: #059669; font-family: 'Outfit', sans-serif; }
 
-/* ── Approval Panel ── */
+/* ── APPROVAL PANEL ── */
 .approval-panel {
     background: #fdf4ff;
     border: 1.5px solid #f0abfc;
-    border-radius: 18px;
-    padding: 20px 24px;
-    margin: 18px 0;
-    box-shadow: 0 4px 18px rgba(168, 85, 247, 0.08);
+    border-radius: 20px;
+    padding: 22px 26px;
+    margin: 20px 0;
+    box-shadow: 0 6px 22px rgba(168, 85, 247, 0.1);
 }
 .approval-panel h4 {
     color: #86198f;
-    font-family: 'Space Grotesk',sans-serif;
-    font-size: 1.1rem;
-    margin: 0 0 12px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    margin: 0 0 14px 0;
     display: flex;
     align-items: center;
     gap: 8px;
 }
-.approval-row { display: flex; gap: 10px; margin-bottom: 6px; font-size: 0.88rem; }
-.approval-row .label { color: #64748b; min-width: 85px; font-weight: 600; }
+.approval-row { display: flex; gap: 12px; margin-bottom: 7px; font-size: 0.9rem; }
+.approval-row .label { color: #64748b; min-width: 90px; font-weight: 600; }
 .approval-row .value { color: #0f172a; font-weight: 500; }
 .sev-pill {
-    padding: 2px 10px;
+    padding: 3px 12px;
     border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.72rem;
+    font-weight: 800;
+    font-size: 0.74rem;
     text-transform: uppercase;
 }
 .sev-high { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
 .sev-medium { background: #fef3c7; color: #d97706; border: 1px solid #fde68a; }
 .sev-low { background: #dcfce7; color: #16a34a; border: 1px solid #bbf7d0; }
 
-/* ── Modern Buttons with Specular Lift ── */
+/* ── SLEEK SPECULAR BUTTONS ── */
 .stButton > button {
     background: #ffffff !important;
     border: 1.5px solid #cbd5e1 !important;
-    border-radius: 12px !important;
-    color: #1e293b !important;
-    font-size: 0.88rem !important;
-    font-weight: 600 !important;
-    padding: 9px 18px !important;
+    border-radius: 14px !important;
+    color: #0f172a !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    padding: 10px 20px !important;
     box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 .stButton > button:hover {
     background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
     border-color: #4338ca !important;
-    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.22) !important;
+    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.25) !important;
     color: #ffffff !important;
     transform: translateY(-2px) !important;
 }
 
 /* Sidebar Section Headers */
 .sb-brand {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.35rem;
-    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.45rem;
+    font-weight: 900;
     color: #0f172a;
-    margin-bottom: 1.4rem;
+    margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    letter-spacing: -0.4px;
 }
 .sb-section-title {
-    font-size: 0.72rem;
+    font-size: 0.74rem;
     font-weight: 800;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.6px;
     text-transform: uppercase;
     color: #64748b;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     padding-bottom: 4px;
     border-bottom: 1px solid #e2e8f0;
 }
 .session-pill {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 9px 12px;
-    font-size: 0.84rem;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 0.86rem;
     color: #334155;
-    margin-bottom: 6px;
+    margin-bottom: 7px;
 }
 .session-pill strong { color: #0f172a; font-weight: 700; }
 
-/* ── Product Detail Page & Action Badges ── */
+/* ── PRODUCT DETAIL VIEW & SPEC GRID ── */
 .prod-page-container {
     background: #ffffff !important;
     border: 1.5px solid #e2e8f0 !important;
-    border-radius: 24px !important;
-    padding: 28px !important;
-    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06) !important;
-    margin-bottom: 24px !important;
+    border-radius: 28px !important;
+    padding: 32px !important;
+    box-shadow: 0 16px 44px rgba(15, 23, 42, 0.06) !important;
+    margin-bottom: 26px !important;
 }
 
 .prod-page-badge {
@@ -554,77 +621,109 @@ details[data-testid="stExpander"] * {
     background: #eef2ff;
     border: 1px solid #c7d2fe;
     border-radius: 9999px;
-    padding: 4px 14px;
-    font-size: 0.78rem;
-    font-weight: 700;
+    padding: 5px 16px;
+    font-size: 0.8rem;
+    font-weight: 800;
     color: #4338ca;
     letter-spacing: 0.5px;
     text-transform: uppercase;
 }
 
 .prod-page-title {
-    font-family: 'Space Grotesk', sans-serif !important;
-    font-size: 1.75rem !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 2rem !important;
     font-weight: 800 !important;
     color: #0f172a !important;
-    line-height: 1.35 !important;
-    margin: 12px 0 !important;
+    line-height: 1.3 !important;
+    margin: 14px 0 !important;
+    letter-spacing: -0.4px !important;
 }
 
 .prod-page-price {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 2.2rem;
-    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.3rem;
+    font-weight: 900;
     color: #059669;
-    margin-right: 18px;
+    margin-right: 20px;
 }
 
 .prod-spec-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 12px;
-    margin: 20px 0;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+    margin: 24px 0;
 }
 
 .prod-spec-card {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
-    border-radius: 14px;
-    padding: 12px 14px;
+    border-radius: 16px;
+    padding: 14px 16px;
+    transition: all 0.2s ease;
+}
+.prod-spec-card:hover {
+    background: #ffffff;
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
 }
 .prod-spec-label {
-    font-size: 0.72rem;
-    font-weight: 700;
+    font-size: 0.74rem;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #64748b;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
 }
 .prod-spec-val {
-    font-size: 0.95rem;
+    font-size: 0.98rem;
     font-weight: 700;
     color: #0f172a;
 }
 
 .order-celebrate-box {
     background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
-    border: 1.5px solid #6ee7b7;
-    border-radius: 18px;
-    padding: 20px 24px;
-    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.12);
-    margin-bottom: 22px;
+    border: 1.5px solid #34d399;
+    border-radius: 20px;
+    padding: 22px 26px;
+    box-shadow: 0 10px 28px rgba(16, 185, 129, 0.12);
+    margin-bottom: 24px;
 }
 
 .prod-tap-header {
-    margin-top: 14px;
-    margin-bottom: 8px;
-    font-size: 0.85rem;
+    margin-top: 18px;
+    margin-bottom: 10px;
+    font-size: 0.88rem;
     color: #4338ca;
     letter-spacing: 0.5px;
-    font-weight: 700;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-hr { border-color: #e2e8f0 !important; margin: 16px 0 !important; }
+/* Chat Product Card */
+.chat-prod-card-preview {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+.chat-prod-card-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+.chat-prod-card-sub {
+    font-size: 0.78rem;
+    color: #64748b;
+}
+
+hr { border-color: #e2e8f0 !important; margin: 18px 0 !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -980,14 +1079,14 @@ def render_product_page(product_id: int):
         lo = st.session_state.last_instant_order
         st.markdown(f"""
         <div class="order-celebrate-box">
-            <div style="font-size:1.15rem;font-weight:700;color:#34d399;margin-bottom:6px;">
+            <div style="font-size:1.18rem;font-weight:800;color:#065f46;margin-bottom:6px;font-family:'Outfit',sans-serif;">
                 🎉 Order Placed & Auto-Satisfied for Testing!
             </div>
-            <div style="font-size:0.92rem;color:#f1f5f9;line-height:1.6;">
-                • <strong>Order ID:</strong> <code style="color:#38bdf8;">{lo['order_id']}</code><br>
+            <div style="font-size:0.94rem;color:#064e3b;line-height:1.7;">
+                • <strong>Order ID:</strong> <code style="color:#0369a1;background:#e0f2fe;font-weight:700;">{lo['order_id']}</code><br>
                 • <strong>Product:</strong> {lo['product_name']}<br>
                 • <strong>Total Paid:</strong> ${lo['price']:.2f}<br>
-                • <strong>Status:</strong> <span style="color:#34d399;font-weight:700;">Delivered Immediately (Auto-Satisfied Self-Test Mode)</span>
+                • <strong>Status:</strong> <span style="color:#059669;font-weight:800;">Delivered Immediately · Auto-Satisfied Self-Test Mode</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -995,17 +1094,17 @@ def render_product_page(product_id: int):
     # Main Product Detail Hero
     st.markdown(f"""
     <div class="prod-page-container">
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
             <span class="prod-page-badge">🏪 {p_dept}</span>
-            <span class="prod-page-badge" style="background:rgba(168,85,247,0.18);border-color:rgba(168,85,247,0.4);color:#d8b4fe;">🏷️ {p_brand}</span>
-            <span class="prod-page-badge" style="background:rgba(16,185,129,0.18);border-color:rgba(16,185,129,0.4);color:#34d399;">🟢 In Stock · Immediate Fulfillment</span>
+            <span class="prod-page-badge" style="background:#faf5ff;border-color:#e9d5ff;color:#7e22ce;">🏷️ {p_brand}</span>
+            <span class="prod-page-badge" style="background:#ecfdf5;border-color:#a7f3d0;color:#047857;">🟢 In Stock · Immediate Delivery</span>
         </div>
         <div class="prod-page-title">{p_name}</div>
-        <div style="display:flex;align-items:baseline;margin-bottom:18px;">
+        <div style="display:flex;align-items:baseline;margin-bottom:20px;">
             <span class="prod-page-price">${p_price:.2f}</span>
-            <span style="font-size:0.95rem;color:#cbd5e1;">⭐ <strong>{p_rating:.1f}/5.0</strong> ({p_reviews:,} verified buyer reviews)</span>
+            <span style="font-size:0.95rem;color:#475569;">⭐ <strong>{p_rating:.1f}/5.0</strong> ({p_reviews:,} verified buyer reviews)</span>
         </div>
-        <div style="font-size:1.02rem;color:#e2e8f0;line-height:1.7;margin-bottom:20px;">
+        <div style="font-size:1.02rem;color:#334155;line-height:1.75;margin-bottom:24px;background:#f8fafc;padding:16px 20px;border-radius:16px;border:1px solid #e2e8f0;">
             {p_desc}
         </div>
         <div class="prod-spec-grid">
@@ -1022,8 +1121,8 @@ def render_product_page(product_id: int):
                 <div class="prod-spec-val">{p_aisle}</div>
             </div>
             <div class="prod-spec-card">
-                <div class="prod-spec-label">Customer Satisfaction</div>
-                <div class="prod-spec-val">98% Positive Rating</div>
+                <div class="prod-spec-label">Customer Rating</div>
+                <div class="prod-spec-val">{p_rating:.1f} / 5.0 (98% Positive)</div>
             </div>
             <div class="prod-spec-card">
                 <div class="prod-spec-label">Guarantee</div>
@@ -1038,7 +1137,7 @@ def render_product_page(product_id: int):
     """, unsafe_allow_html=True)
 
     # Action Buttons
-    st.markdown('<div style="font-size:0.8rem;font-weight:700;letter-spacing:1px;color:#818cf8;text-transform:uppercase;margin-bottom:10px;">⚡ Product Actions & Testing</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-size:0.8rem;font-weight:800;letter-spacing:1.2px;color:#4f46e5;text-transform:uppercase;margin-bottom:12px;">⚡ Product Actions & Instant Testing</div>', unsafe_allow_html=True)
     btn_c1, btn_c2, btn_c3 = st.columns([2, 2, 2])
     with btn_c1:
         if st.button("⚡ Buy Now (Auto-Satisfied)", key="btn_page_buy_now", use_container_width=True):
@@ -1198,9 +1297,15 @@ st.markdown(f"""
     <div class="ss-logo-icon">🛒</div>
     <div class="ss-logo-text">
         <div class="ss-logo-title">SmartShop Elite</div>
-        <div class="ss-logo-sub">Autonomous Retail Concierge</div>
+        <div class="ss-logo-sub">Autonomous Retail Concierge · Multi-Agent RAG</div>
     </div>
     <span class="ss-mode-badge {mode_class}">{mode_label}</span>
+</div>
+<div class="feature-pill-strip">
+    <span class="feature-pill-item">📦 <strong>325+ Catalog Items</strong></span>
+    <span class="feature-pill-item">🔬 <strong>Deep Spec & Chemical Analysis</strong></span>
+    <span class="feature-pill-item">⚡ <strong>One-Click Test Purchase</strong></span>
+    <span class="feature-pill-item">🤖 <strong>LangGraph Multi-Agent Engine</strong></span>
 </div>""", unsafe_allow_html=True)
 
 # ── CONDITIONAL VIEW: PRODUCT PAGE OR CONCIERGE CHAT ──
@@ -1231,8 +1336,8 @@ else:
             <div class="welcome-icon">✨</div>
             <div class="welcome-title">Welcome to SmartShop Elite</div>
             <div class="welcome-subtitle">
-                Your personal retail concierge powered by LangGraph multi-agent architecture and Google Gemini.
-                Discover 325+ products with semantic vector search, analyze detailed specifications, compare items, and enjoy seamless one-click ordering.
+                Your personal retail concierge powered by <strong>LangGraph Multi-Agent architecture</strong> and <strong>Google Gemini RAG</strong>.<br>
+                Discover 325+ curated products with semantic vector search, analyze chemical and technical specifications, compare items, and enjoy seamless one-click ordering.
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1284,17 +1389,30 @@ else:
                 # Interactive Product Badges / Tap to view product page
                 detected_pids = extract_product_ids_from_text(content)
                 if detected_pids:
-                    st.markdown('<div class="prod-tap-header">🔍 <strong>Tap a Product</strong> to View Product Page, Specs & Instant Buy:</div>', unsafe_allow_html=True)
+                    st.markdown('<div class="prod-tap-header">🔍 <strong>Featured Product Matches</strong> · Tap to inspect specs or one-click buy:</div>', unsafe_allow_html=True)
                     for idx_p, pid in enumerate(detected_pids):
                         p_info = get_product_details(pid)
                         if p_info:
                             p_name = p_info.get("product_name", f"Product #{pid}")
                             p_price = float(p_info.get("price", 0.0))
                             p_brand = p_info.get("brand", "")
+                            p_dept = p_info.get("department", "Store Item")
+                            p_aisle = p_info.get("aisle", "General")
                             b_prefix = f"[{p_brand}] " if p_brand else ""
+                            st.markdown(f"""
+                            <div class="chat-prod-card-preview">
+                                <div>
+                                    <div class="chat-prod-card-title">🏷️ {b_prefix}{p_name}</div>
+                                    <div class="chat-prod-card-sub">Department: {p_dept} · Aisle: {p_aisle} · ID #{pid}</div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <span style="font-family:'Outfit',sans-serif;font-weight:900;font-size:1.18rem;color:#059669;">${p_price:.2f}</span>
+                                </div>
+                            </div>
+                            """, unsafe_allow_html=True)
                             col_card_a, col_card_b = st.columns([3, 2])
                             with col_card_a:
-                                if st.button(f"📄 View Product: {b_prefix}{p_name[:34]}... (${p_price:.2f})", key=f"chat_tap_prod_{msg_idx}_{pid}_{idx_p}", use_container_width=True):
+                                if st.button(f"📄 View Product Details & Specs", key=f"chat_tap_prod_{msg_idx}_{pid}_{idx_p}", use_container_width=True):
                                     st.session_state.active_product_id = pid
                                     st.rerun()
                             with col_card_b:
@@ -1347,17 +1465,30 @@ else:
                         st.markdown(reply_text)
                         live_pids = extract_product_ids_from_text(reply_text)
                         if live_pids:
-                            st.markdown('<div class="prod-tap-header">🔍 <strong>Tap a Product</strong> to View Product Page, Specs & Instant Buy:</div>', unsafe_allow_html=True)
+                            st.markdown('<div class="prod-tap-header">🔍 <strong>Featured Product Matches</strong> · Tap to inspect specs or one-click buy:</div>', unsafe_allow_html=True)
                             for idx_p, pid in enumerate(live_pids):
                                 p_info = get_product_details(pid)
                                 if p_info:
                                     p_name = p_info.get("product_name", f"Product #{pid}")
                                     p_price = float(p_info.get("price", 0.0))
                                     p_brand = p_info.get("brand", "")
+                                    p_dept = p_info.get("department", "Store Item")
+                                    p_aisle = p_info.get("aisle", "General")
                                     b_prefix = f"[{p_brand}] " if p_brand else ""
+                                    st.markdown(f"""
+                                    <div class="chat-prod-card-preview">
+                                        <div>
+                                            <div class="chat-prod-card-title">🏷️ {b_prefix}{p_name}</div>
+                                            <div class="chat-prod-card-sub">Department: {p_dept} · Aisle: {p_aisle} · ID #{pid}</div>
+                                        </div>
+                                        <div style="text-align:right;">
+                                            <span style="font-family:'Outfit',sans-serif;font-weight:900;font-size:1.18rem;color:#059669;">${p_price:.2f}</span>
+                                        </div>
+                                    </div>
+                                    """, unsafe_allow_html=True)
                                     col_card_a, col_card_b = st.columns([3, 2])
                                     with col_card_a:
-                                        if st.button(f"📄 View Product: {b_prefix}{p_name[:34]}... (${p_price:.2f})", key=f"chat_tap_prod_live_{pid}_{idx_p}", use_container_width=True):
+                                        if st.button(f"📄 View Product Details & Specs", key=f"chat_tap_prod_live_{pid}_{idx_p}", use_container_width=True):
                                             st.session_state.active_product_id = pid
                                             st.rerun()
                                     with col_card_b:
@@ -1396,7 +1527,7 @@ else:
                 st.rerun()
 
     # ── PERSISTENT QUICK SUGGESTIONS & PINNED CHAT INPUT ──
-    st.markdown('<div style="margin-top:16px;margin-bottom:8px;font-size:0.75rem;font-weight:700;letter-spacing:1px;color:#818cf8;text-transform:uppercase;">⚡ Quick Suggestions & Sample Queries</div>', unsafe_allow_html=True)
+    st.markdown('<div style="margin-top:20px;margin-bottom:10px;font-size:0.76rem;font-weight:800;letter-spacing:1.2px;color:#4f46e5;text-transform:uppercase;">⚡ Quick Suggestions & Direct Testing Queries</div>', unsafe_allow_html=True)
     s_cols1 = st.columns(4)
     with s_cols1[0]:
         if st.button("👟 Running Shoes", key="sug_shoes", use_container_width=True):
